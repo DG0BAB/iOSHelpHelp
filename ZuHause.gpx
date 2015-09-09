@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gpx
+xmlns="http://www.topografix.com/GPX/1/1"
+xmlns:gpxx = "http://www.garmin.com/xmlschemas/GpxExtensions/v3"
+xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd
+http://www.garmin.com/xmlschemas/GpxExtensions/v3
+http://www8.garmin.com/xmlschemas/GpxExtensions/v3/GpxExtensionsv3.xsd"
+version="1.1"
+creator="gpx-poi.com">
+   <wpt lat="52.455497" lon="13.593346">
+      <time>2015-09-09T20:22:08Z</time>
+      <name>ZuHause</name>
+      <extensions>
+         <gpxx:WaypointExtension>
+            <gpxx:Address>
+               <gpxx:StreetAddress>Seelenbinderstrae 132</gpxx:StreetAddress>
+               <gpxx:City>Berlin</gpxx:City>
+               <gpxx:Country>Germany</gpxx:Country>
+               <gpxx:PostalCode>12555</gpxx:PostalCode>
+            </gpxx:Address>
+         </gpxx:WaypointExtension>
+      </extensions>
+   </wpt>
+</gpx>
