@@ -12,11 +12,12 @@ import MapKit
 class MapViewController: UIViewController {
 
 	@IBOutlet weak var mapView: MKMapView!
+	let communicator = HTTPCommunicator(url:"https://helphelp2.com")
 	
 	private lazy var locationManager:CLLocationManager = {
 		let locationManager = CLLocationManager.init()
 		locationManager.delegate = self
-		locationManager.distanceFilter = 1000
+		locationManager.distanceFilter = 10000
 		return locationManager
 	}()
 	
@@ -28,6 +29,7 @@ class MapViewController: UIViewController {
 		if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
 			locationManager.requestWhenInUseAuthorization()
 		}
+		
 	}
 
 	override func viewDidDisappear(animated: Bool) {
@@ -52,6 +54,25 @@ extension MapViewController : CLLocationManagerDelegate {
 		if let userLocation = locations.last {
 			let coordinateRegion = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 20000, 20000)
 			self.mapView.setRegion(coordinateRegion, animated: true)
+			do {
+				try communicator?.GET("/heart/places/?lat=\(userLocation.coordinate.latitude)&lon=\(userLocation.coordinate.longitude)", success: { (resultData) -> Void in
+					let result = String(data:resultData, encoding:NSUTF8StringEncoding)!
+					print(result)
+					do {
+						let jsonDict = try NSJSONSerialization.JSONObjectWithData(resultData, options: NSJSONReadingOptions.AllowFragments) as! JSONDictType
+						let sites = CollectionSiteContainer(jsonDict: jsonDict)
+						print("Sites read")
+					} catch {
+						
+					}
+					}, failure: { (error) -> Void in
+						print("Fehler: \(error)")
+				})
+			} catch HTTPCommunicatorError.MissingPath {
+				print("No Path given for GET")
+			} catch {
+				
+			}
 		}
 	}
 	

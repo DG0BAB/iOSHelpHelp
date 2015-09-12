@@ -7,23 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		791E2B941BA4523600C1079C /* HTTPCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B931BA4523600C1079C /* HTTPCommunicator.swift */; settings = {ASSET_TAGS = (); }; };
+		791E2B961BA454B200C1079C /* Communicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B951BA454B200C1079C /* Communicator.swift */; settings = {ASSET_TAGS = (); }; };
+		791E2B991BA45D1700C1079C /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */; settings = {ASSET_TAGS = (); }; };
+		791E2B9C1BA4876200C1079C /* CollectionSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B9B1BA4876200C1079C /* CollectionSite.swift */; settings = {ASSET_TAGS = (); }; };
+		791E2B9E1BA4880A00C1079C /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B9D1BA4880A00C1079C /* Address.swift */; settings = {ASSET_TAGS = (); }; };
 		796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C31BA0BCC500A27539 /* AppDelegate.swift */; };
 		796E44C61BA0BCC500A27539 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C51BA0BCC500A27539 /* MapViewController.swift */; };
-		796E44C81BA0BCC500A27539 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C71BA0BCC500A27539 /* SecondViewController.swift */; };
+		796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C71BA0BCC500A27539 /* ListViewController.swift */; };
 		796E44CB1BA0BCC500A27539 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796E44C91BA0BCC500A27539 /* Main.storyboard */; };
 		796E44CD1BA0BCC500A27539 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 796E44CC1BA0BCC500A27539 /* Assets.xcassets */; };
 		796E44D01BA0BCC500A27539 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796E44CE1BA0BCC500A27539 /* LaunchScreen.storyboard */; };
+		79E097EB1BA49BF500D838FD /* CollectionSiteContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		791E2B931BA4523600C1079C /* HTTPCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPCommunicator.swift; sourceTree = "<group>"; };
+		791E2B951BA454B200C1079C /* Communicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicator.swift; sourceTree = "<group>"; };
+		791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
+		791E2B9B1BA4876200C1079C /* CollectionSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSite.swift; sourceTree = "<group>"; };
+		791E2B9D1BA4880A00C1079C /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		796E44C01BA0BCC500A27539 /* HelpHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		796E44C31BA0BCC500A27539 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796E44C51BA0BCC500A27539 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		796E44C71BA0BCC500A27539 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		796E44C71BA0BCC500A27539 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		796E44CA1BA0BCC500A27539 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		796E44CC1BA0BCC500A27539 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		796E44CF1BA0BCC500A27539 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		796E44D11BA0BCC500A27539 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +49,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		791E2B921BA425F200C1079C /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				791E2B951BA454B200C1079C /* Communicator.swift */,
+				791E2B931BA4523600C1079C /* HTTPCommunicator.swift */,
+				791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */,
+			);
+			name = Communication;
+			sourceTree = "<group>";
+		};
+		791E2B971BA4553B00C1079C /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = JSON;
+			sourceTree = "<group>";
+		};
+		791E2B9A1BA4869900C1079C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				791E2B9B1BA4876200C1079C /* CollectionSite.swift */,
+				791E2B9D1BA4880A00C1079C /* Address.swift */,
+				79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		796E44B71BA0BCC500A27539 = {
 			isa = PBXGroup;
 			children = (
@@ -57,14 +96,33 @@
 			isa = PBXGroup;
 			children = (
 				796E44C31BA0BCC500A27539 /* AppDelegate.swift */,
-				796E44C51BA0BCC500A27539 /* MapViewController.swift */,
-				796E44C71BA0BCC500A27539 /* SecondViewController.swift */,
+				791E2B9A1BA4869900C1079C /* Model */,
+				791E2B921BA425F200C1079C /* Communication */,
+				791E2B971BA4553B00C1079C /* JSON */,
+				7979D1B11BA2249100D78491 /* List View */,
+				7979D1B01BA2247A00D78491 /* Map View */,
 				796E44C91BA0BCC500A27539 /* Main.storyboard */,
 				796E44CC1BA0BCC500A27539 /* Assets.xcassets */,
 				796E44CE1BA0BCC500A27539 /* LaunchScreen.storyboard */,
 				796E44D11BA0BCC500A27539 /* Info.plist */,
 			);
 			path = HelpHelp;
+			sourceTree = "<group>";
+		};
+		7979D1B01BA2247A00D78491 /* Map View */ = {
+			isa = PBXGroup;
+			children = (
+				796E44C51BA0BCC500A27539 /* MapViewController.swift */,
+			);
+			name = "Map View";
+			sourceTree = "<group>";
+		};
+		7979D1B11BA2249100D78491 /* List View */ = {
+			isa = PBXGroup;
+			children = (
+				796E44C71BA0BCC500A27539 /* ListViewController.swift */,
+			);
+			name = "List View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,9 +195,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				796E44C81BA0BCC500A27539 /* SecondViewController.swift in Sources */,
+				791E2B961BA454B200C1079C /* Communicator.swift in Sources */,
+				796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */,
 				796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */,
+				791E2B941BA4523600C1079C /* HTTPCommunicator.swift in Sources */,
+				79E097EB1BA49BF500D838FD /* CollectionSiteContainer.swift in Sources */,
+				791E2B991BA45D1700C1079C /* HTTPStatusCodes.swift in Sources */,
 				796E44C61BA0BCC500A27539 /* MapViewController.swift in Sources */,
+				791E2B9E1BA4880A00C1079C /* Address.swift in Sources */,
+				791E2B9C1BA4876200C1079C /* CollectionSite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +357,7 @@
 				796E44D61BA0BCC500A27539 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
