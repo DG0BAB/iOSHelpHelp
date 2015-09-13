@@ -21,11 +21,12 @@ struct Weekday : OptionSetType {
 }
 */
 
-struct CollectionSite: Equatable {
+class CollectionSite : Equatable{
 	
 	let id:Int
 	let name:String
 	let address:Address
+	let distance:Double
 	let openingHint:String
 	let webAddress:String
 	let contactPerson:String
@@ -51,10 +52,11 @@ struct CollectionSite: Equatable {
 		}
 	}
 */
-	init(id:Int, name:String, address:Address, openingHint:String, webAddress:String, contactPerson:String, contactPhoneNumber:String, helpersNeeded:Bool, items:[String]) {
+	required init(id:Int, name:String, address:Address, distance:Double, openingHint:String, webAddress:String, contactPerson:String, contactPhoneNumber:String, helpersNeeded:Bool, items:[String]) {
 		self.id = id
 		self.name = name
 		self.address = address
+		self.distance = distance
 		self.openingHint = openingHint
 		self.webAddress = webAddress
 		self.contactPerson = contactPerson
@@ -63,20 +65,21 @@ struct CollectionSite: Equatable {
 		self.items = items
 	}
 	
-	init(jsonDict:JSONDictType) {
+	convenience init(jsonDict:JSONDictType) {
 		let id = jsonDict["id"] as! Int
 		let name = jsonDict["name"] as! String
 		let address = Address(jsonDict:jsonDict["addr"] as! JSONDictType)
+		let distance = jsonDict["distance"] as! Double
 		let openingHint = jsonDict["hours"] as! String
 		let webAddress = jsonDict["website"] as! String
 		let contactPerson = jsonDict["person"] as! String
 		let contactPhoneNumber = jsonDict["phone"] as! String
 		let helpersNeeded = jsonDict["helpers"] as! Bool
-		self.init(id:id, name:name, address:address, openingHint:openingHint, webAddress:webAddress, contactPerson:contactPerson, contactPhoneNumber:contactPhoneNumber, helpersNeeded:helpersNeeded, items:[String]())
-	}
+		self.init(id:id, name:name, address:address, distance:distance, openingHint:openingHint, webAddress:webAddress, contactPerson:contactPerson, contactPhoneNumber:contactPhoneNumber, helpersNeeded:helpersNeeded, items:[String]())
+	}	
 }
 
 func ==(lhs: CollectionSite, rhs: CollectionSite) -> Bool {
-	return lhs.id == rhs.id
+	return lhs === rhs
 	}
 
