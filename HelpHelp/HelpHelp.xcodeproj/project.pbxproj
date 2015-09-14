@@ -12,6 +12,8 @@
 		791E2B991BA45D1700C1079C /* HTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */; settings = {ASSET_TAGS = (); }; };
 		791E2B9C1BA4876200C1079C /* CollectionSite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B9B1BA4876200C1079C /* CollectionSite.swift */; settings = {ASSET_TAGS = (); }; };
 		791E2B9E1BA4880A00C1079C /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791E2B9D1BA4880A00C1079C /* Address.swift */; settings = {ASSET_TAGS = (); }; };
+		792E05891BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E05881BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		792E058B1BA76DF0000CB093 /* CollectionSiteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */; settings = {ASSET_TAGS = (); }; };
 		7949B12F1BA58A9B001F6A76 /* CollectionSiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */; settings = {ASSET_TAGS = (); }; };
 		7949B1321BA590A8001F6A76 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B1311BA590A8001F6A76 /* UserDefaults.swift */; settings = {ASSET_TAGS = (); }; };
 		796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C31BA0BCC500A27539 /* AppDelegate.swift */; };
@@ -29,6 +31,8 @@
 		791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
 		791E2B9B1BA4876200C1079C /* CollectionSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSite.swift; sourceTree = "<group>"; };
 		791E2B9D1BA4880A00C1079C /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		792E05881BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteMapDetailViewController.swift; sourceTree = "<group>"; };
+		792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteAnnotation.swift; sourceTree = "<group>"; };
 		7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteManager.swift; sourceTree = "<group>"; };
 		7949B1311BA590A8001F6A76 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		796E44C01BA0BCC500A27539 /* HelpHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +60,7 @@
 		791E2B921BA425F200C1079C /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				791E2B971BA4553B00C1079C /* JSON */,
 				791E2B951BA454B200C1079C /* Communicator.swift */,
 				791E2B931BA4523600C1079C /* HTTPCommunicator.swift */,
 				791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */,
@@ -78,6 +83,17 @@
 				79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		792E05871BA75B06000CB093 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				796E44C91BA0BCC500A27539 /* Main.storyboard */,
+				7979D1B11BA2249100D78491 /* List View */,
+				7979D1B01BA2247A00D78491 /* Map View */,
+			);
+			name = GUI;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		7949B12D1BA58A70001F6A76 /* CollectionSite */ = {
@@ -117,13 +133,10 @@
 			isa = PBXGroup;
 			children = (
 				796E44C31BA0BCC500A27539 /* AppDelegate.swift */,
-				7949B1301BA59087001F6A76 /* UserDefaults */,
 				7949B12D1BA58A70001F6A76 /* CollectionSite */,
+				792E05871BA75B06000CB093 /* GUI */,
 				791E2B921BA425F200C1079C /* Communication */,
-				791E2B971BA4553B00C1079C /* JSON */,
-				7979D1B11BA2249100D78491 /* List View */,
-				7979D1B01BA2247A00D78491 /* Map View */,
-				796E44C91BA0BCC500A27539 /* Main.storyboard */,
+				7949B1301BA59087001F6A76 /* UserDefaults */,
 				796E44CC1BA0BCC500A27539 /* Assets.xcassets */,
 				796E44CE1BA0BCC500A27539 /* LaunchScreen.storyboard */,
 				796E44D11BA0BCC500A27539 /* Info.plist */,
@@ -134,9 +147,12 @@
 		7979D1B01BA2247A00D78491 /* Map View */ = {
 			isa = PBXGroup;
 			children = (
+				792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */,
 				796E44C51BA0BCC500A27539 /* MapViewController.swift */,
+				792E05881BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift */,
 			);
 			name = "Map View";
+			path = HelpHelp;
 			sourceTree = "<group>";
 		};
 		7979D1B11BA2249100D78491 /* List View */ = {
@@ -145,6 +161,7 @@
 				796E44C71BA0BCC500A27539 /* ListViewController.swift */,
 			);
 			name = "List View";
+			path = HelpHelp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +237,9 @@
 				791E2B961BA454B200C1079C /* Communicator.swift in Sources */,
 				796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */,
 				7949B12F1BA58A9B001F6A76 /* CollectionSiteManager.swift in Sources */,
+				792E05891BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift in Sources */,
 				7949B1321BA590A8001F6A76 /* UserDefaults.swift in Sources */,
+				792E058B1BA76DF0000CB093 /* CollectionSiteAnnotation.swift in Sources */,
 				796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */,
 				791E2B941BA4523600C1079C /* HTTPCommunicator.swift in Sources */,
 				79E097EB1BA49BF500D838FD /* CollectionSiteContainer.swift in Sources */,
@@ -240,6 +259,7 @@
 				796E44CA1BA0BCC500A27539 /* Base */,
 			);
 			name = Main.storyboard;
+			path = HelpHelp;
 			sourceTree = "<group>";
 		};
 		796E44CE1BA0BCC500A27539 /* LaunchScreen.storyboard */ = {

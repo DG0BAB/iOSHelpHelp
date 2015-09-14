@@ -50,6 +50,13 @@ class CollectionSiteManager {
 		self.collectionSiteContainer = container
 	}
 	
+	func siteForId(siteId:Int) -> CollectionSite? {
+		if let index = collectionSiteContainer.collectionSites.indexOf({(site) -> Bool in return siteId == site.id}) {
+			return collectionSiteContainer.collectionSites[index]
+		}
+		return nil
+	}
+	
 	func sitesWithinDistance(distance:CLLocationDistance) -> CollectionSitesType {
 		return collectionSiteContainer.collectionSites.filter { (site) -> Bool in
 			site.distance <= distance

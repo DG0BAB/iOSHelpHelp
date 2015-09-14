@@ -11,6 +11,8 @@ import MapKit
 
 class MapViewController: UIViewController {
 
+	static let CollectionSiteAnnotationIdentifier = "CollectionSiteAnnotation"
+	
 	@IBOutlet weak var mapView: MKMapView!
 	var currentLocation:CLLocation = CLLocation(latitude: 0, longitude: 0)
 	
@@ -20,6 +22,8 @@ class MapViewController: UIViewController {
 		locationManager.distanceFilter = 10000
 		return locationManager
 	}()
+	
+// MARK: - View Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -34,10 +38,31 @@ class MapViewController: UIViewController {
 		super.viewDidDisappear(animated)
 		locationManager.stopUpdatingLocation()
 	}
+
+// MARK: - Actions
+	
+	func infoButtonAction(annotation:CollectionSiteAnnotation, control:UIControl) {
+		if let detailViewController = self.storyboard?.instantiateViewControllerWithIdentifier(CollectionSiteMapDetailViewController.Identifier) as? CollectionSiteMapDetailViewController {
+			detailViewController.siteId = annotation.siteId
+			
+			if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+				detailViewController.modalPresentationStyle = UIModalPresentationStyle.PageSheet
+				detailViewController.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+				presentViewController(detailViewController, animated: true, completion: nil)
+			} else {
+				let popoverController = UIPopoverController(contentViewController: detailViewController)
+				popoverController.presentPopoverFromRect(control.frame, inView: mapView, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+			}
+		}
+	}
+	
+// MARK: - Overrides From Superclass
 	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 	}
+
+// MARK:- Private Stuff
 	
 	private func prepareMapView() {
 		mapView.showsUserLocation = true
@@ -48,7 +73,7 @@ class MapViewController: UIViewController {
 	private func prepareAnnotations(sites:CollectionSitesType) {
 		for oneSite in sites {
 			if let coordinate = CollectionSiteManager.currentManager?.coordinateForSite(oneSite) {
-				let anotation = MKPointAnnotation()
+				let anotation = CollectionSiteAnnotation(siteId: oneSite.id)
 				anotation.coordinate = coordinate
 				anotation.title = oneSite.name
 				let distance = String(format: "%2.2f", (oneSite.distance/1000))
@@ -59,6 +84,8 @@ class MapViewController: UIViewController {
 		
 	}
 }
+
+// MARK: - CLLocationManager Delegate
 
 extension MapViewController : CLLocationManagerDelegate {
 	
@@ -71,8 +98,7 @@ extension MapViewController : CLLocationManagerDelegate {
 	}
 	
 	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		print("Locations: \(locations)")
-		if let userLocation = locations.last where currentLocation.coordinate.latitude != userLocation.coordinate.latitude || currentLocation.coordinate.longitude != userLocation.coordinate.longitude {
+		if let userLocation = locations.last where currentLocation.distanceFromLocation(userLocation) > locationManager.distanceFilter {
 			self.currentLocation = userLocation
 			let coordinateRegion = UserDefaults.defaultCoordinateRegion(userLocation.coordinate)
 			mapView.setRegion(coordinateRegion, animated: true)
@@ -86,6 +112,8 @@ extension MapViewController : CLLocationManagerDelegate {
 	
 }
 
+// MARK: - MAPViewController Delegate
+
 extension MapViewController : MKMapViewDelegate {
 	
 	func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
@@ -93,22 +121,31 @@ extension MapViewController : MKMapViewDelegate {
 	}
 	
 	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+		
 		guard !(annotation is MKUserLocation) else { return nil }
 		
-		var pinAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier("CollectionSite") as? MKPinAnnotationView
+		var pinAnnotation = mapView.dequeueReusableAnnotationViewWithIdentifier(MapViewController.CollectionSiteAnnotationIdentifier) as? MKPinAnnotationView
 		
 		if pinAnnotation == nil {
-			pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "CollectionSite")
+			pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: MapViewController.CollectionSiteAnnotationIdentifier)
 			pinAnnotation!.pinColor = MKPinAnnotationColor.Red
 			pinAnnotation!.animatesDrop = true
 			pinAnnotation!.canShowCallout = true
+			let infoButton = UIButton(type: UIButtonType.DetailDisclosure)
+//			infoButton.addTarget(self, action: "infoButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+			pinAnnotation!.rightCalloutAccessoryView = infoButton
 		} else {
 			pinAnnotation?.annotation = annotation
 		}
 		return pinAnnotation
 	}
 	
+	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+		infoButtonAction(view.annotation as! CollectionSiteAnnotation, control: control)
+	}
 }
+
+// MARK: - MKCoordinateRegion Extension
 
 extension MKCoordinateRegion {
 	func metersOfLatitude() -> CLLocationDistance {
