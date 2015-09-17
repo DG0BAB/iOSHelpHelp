@@ -14,7 +14,10 @@ class MapViewController: UIViewController {
 	static let CollectionSiteAnnotationIdentifier = "CollectionSiteAnnotation"
 	
 	@IBOutlet weak var mapView: MKMapView!
-	var currentLocation:CLLocation = CLLocation(latitude: 0, longitude: 0)
+	private var startRegion: MKCoordinateRegion?
+	private var currentLocation:CLLocation = CLLocation(latitude: 0, longitude: 0)
+	private var currentRegion:MKCoordinateRegion?
+	private var currentAnnotations = Set<CollectionSiteAnnotation>()
 	
 	private lazy var locationManager:CLLocationManager = {
 		let locationManager = CLLocationManager.init()
@@ -27,11 +30,9 @@ class MapViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
-			locationManager.requestWhenInUseAuthorization()
-		} else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
-			prepareMapView()
-		}
+		mapView.delegate = self
+		startRegion = mapView.region
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: "authorizationStatusChanged:", name: AppDelegate.LocationAccessAuthorizationChangedNotification, object: nil)
 	}
 
 	override func viewDidDisappear(animated: Bool) {
@@ -39,21 +40,48 @@ class MapViewController: UIViewController {
 		locationManager.stopUpdatingLocation()
 	}
 
-// MARK: - Actions
+	deinit {
+		NSNotificationCenter.defaultCenter().removeObserver(self)
+	}
 	
-	func infoButtonAction(annotation:CollectionSiteAnnotation, control:UIControl) {
-		if let detailViewController = self.storyboard?.instantiateViewControllerWithIdentifier(CollectionSiteMapDetailViewController.Identifier) as? CollectionSiteMapDetailViewController {
-			detailViewController.siteId = annotation.siteId
-			
-			if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
-				detailViewController.modalPresentationStyle = UIModalPresentationStyle.PageSheet
-				detailViewController.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
-				presentViewController(detailViewController, animated: true, completion: nil)
+	func authorizationStatusChanged(notification:NSNotification) {
+		if let userInfo = notification.userInfo {
+			let status = CLAuthorizationStatus.init(rawValue: Int32((userInfo[AppDelegate.LocationAccessAuthorizationChangedKey] as! Int)))
+			if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+				prepareMapView()
 			} else {
-				let popoverController = UIPopoverController(contentViewController: detailViewController)
-				popoverController.presentPopoverFromRect(control.frame, inView: mapView, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+				locationManager.stopUpdatingLocation()
+				mapView.region = startRegion!
+				for oneAnnotation in mapView.annotations {
+					mapView.removeAnnotation(oneAnnotation)
+				}
 			}
 		}
+		
+	}
+	
+// MARK: - Actions
+	
+	func infoButtonAction(annotationView:MKAnnotationView, control:UIControl) {
+		if let navigationContoller = self.storyboard?.instantiateViewControllerWithIdentifier("CollectionSiteMapDetailNavigationViewController") as? UINavigationController {
+			if let detailViewController = navigationContoller.topViewController as? CollectionSiteMapDetailViewController {
+				detailViewController.siteId = (annotationView.annotation as! CollectionSiteAnnotation).siteId
+				
+				if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone {
+					detailViewController.modalPresentationStyle = UIModalPresentationStyle.PageSheet
+					detailViewController.modalTransitionStyle = UIModalTransitionStyle.CoverVertical
+					presentViewController(navigationContoller, animated: true, completion: nil)
+				} else {
+					let popoverController = UIPopoverController(contentViewController: navigationContoller)
+					popoverController.presentPopoverFromRect(control.frame, inView: annotationView, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+				}
+			}
+		}
+	}
+	
+	@IBAction func locateUserAction(sender: AnyObject) {
+		firstZoom = true
+		potentiallyZoomToUserLocation()
 	}
 	
 // MARK: - Overrides From Superclass
@@ -67,10 +95,31 @@ class MapViewController: UIViewController {
 	private func prepareMapView() {
 		mapView.showsUserLocation = true
 		mapView.userTrackingMode = .Follow
-		mapView.delegate = self
+		if !firstZoom {
+			firstZoom = true
+			potentiallyZoomToUserLocation()
+		}
+	}
+	
+	private var firstZoom = true
+	
+	private func potentiallyZoomToUserLocation() {
+		if firstZoom {
+			let coordinateRegion = UserDefaults.defaultCoordinateRegion(currentLocation.coordinate)
+			mapView.setRegion(coordinateRegion, animated: true)
+			showSiteAnnotationsInRegion(coordinateRegion)
+			firstZoom = false
+		}
+
+	}
+	private func showSiteAnnotationsInRegion(region:MKCoordinateRegion) {
+		if let sitesWithinRegion = CollectionSiteManager.currentManager?.sitesWithinRegion(region) {
+			self.prepareAnnotations(sitesWithinRegion)
+		}
 	}
 	
 	private func prepareAnnotations(sites:CollectionSitesType) {
+		var newAnnotations = Set<CollectionSiteAnnotation>()
 		for oneSite in sites {
 			if let coordinate = CollectionSiteManager.currentManager?.coordinateForSite(oneSite) {
 				let anotation = CollectionSiteAnnotation(siteId: oneSite.id)
@@ -78,10 +127,16 @@ class MapViewController: UIViewController {
 				anotation.title = oneSite.name
 				let distance = String(format: "%2.2f", (oneSite.distance/1000))
 				anotation.subtitle = "Entfernung: "+distance+" km"
-				mapView.addAnnotation(anotation);
+				newAnnotations.insert(anotation);
 			}
 		}
-		
+		let annotationsToRemnove = currentAnnotations.subtract(newAnnotations)
+		let annotationsToAdd = newAnnotations.subtract(currentAnnotations)
+		newAnnotations = currentAnnotations.subtract(annotationsToRemnove)
+		newAnnotations = newAnnotations.union(annotationsToAdd)
+		mapView.removeAnnotations(Array(annotationsToRemnove))
+		mapView.addAnnotations(Array(annotationsToAdd))
+		currentAnnotations = newAnnotations
 	}
 }
 
@@ -89,24 +144,11 @@ class MapViewController: UIViewController {
 
 extension MapViewController : CLLocationManagerDelegate {
 	
-	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-		if status == CLAuthorizationStatus.Denied {
-			// TODO: Show Error and Exit
-		} else if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-			prepareMapView()
-		}
-	}
-	
 	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		if let userLocation = locations.last where currentLocation.distanceFromLocation(userLocation) > locationManager.distanceFilter {
+		
+		if let userLocation = locations.last where currentLocation.distanceFromLocation(userLocation) > locationManager.distanceFilter{
 			self.currentLocation = userLocation
-			let coordinateRegion = UserDefaults.defaultCoordinateRegion(userLocation.coordinate)
-			mapView.setRegion(coordinateRegion, animated: true)
-			
-			CollectionSiteManager.loadSitesForCoordinate(userLocation.coordinate) { [unowned self] siteManager in
-				let sitesWithinRegion = siteManager.sitesWithinDistance(coordinateRegion.metersOfLatitude())
-				self.prepareAnnotations(sitesWithinRegion)
-			}
+			CollectionSiteManager.loadSitesForCoordinate(userLocation.coordinate) { siteManager in self.potentiallyZoomToUserLocation() }
 		}
 	}
 	
@@ -132,7 +174,6 @@ extension MapViewController : MKMapViewDelegate {
 			pinAnnotation!.animatesDrop = true
 			pinAnnotation!.canShowCallout = true
 			let infoButton = UIButton(type: UIButtonType.DetailDisclosure)
-//			infoButton.addTarget(self, action: "infoButtonAction:", forControlEvents: UIControlEvents.TouchUpInside)
 			pinAnnotation!.rightCalloutAccessoryView = infoButton
 		} else {
 			pinAnnotation?.annotation = annotation
@@ -141,7 +182,15 @@ extension MapViewController : MKMapViewDelegate {
 	}
 	
 	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-		infoButtonAction(view.annotation as! CollectionSiteAnnotation, control: control)
+		infoButtonAction(view, control: control)
+	}
+	
+	func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+		currentRegion = mapView.region
+		if currentRegion?.center.latitude != startRegion?.center.latitude {
+			showSiteAnnotationsInRegion(currentRegion!)
+		}
+
 	}
 }
 

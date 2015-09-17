@@ -16,4 +16,17 @@ class CollectionSiteAnnotation: MKPointAnnotation {
 		super.init()
 		self.siteId = siteId
 	}
+	
+	override func isEqual(object: AnyObject?) -> Bool {
+		if let object = object as? CollectionSiteAnnotation {
+			return self.siteId == object.siteId
+		}
+		return false
+	}
+	
+	override var hashValue: Int {
+		return siteId
+	}
+
+	
 }

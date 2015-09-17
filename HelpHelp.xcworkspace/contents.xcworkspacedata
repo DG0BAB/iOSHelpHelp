@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:HelpHelp.playground">
-   </FileRef>
-   <FileRef
       location = "group:ZuHause.gpx">
    </FileRef>
    <FileRef

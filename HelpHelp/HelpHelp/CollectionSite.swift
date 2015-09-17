@@ -21,7 +21,7 @@ struct Weekday : OptionSetType {
 }
 */
 
-class CollectionSite : Equatable{
+class CollectionSite : Equatable {
 	
 	let id:Int
 	let name:String
@@ -33,6 +33,17 @@ class CollectionSite : Equatable{
 	let contactPhoneNumber:String
 	let helpersNeeded:Bool
 	let items:[String]
+	
+	var contact:String {
+		let person = contactPerson.isEmpty ? "" : contactPerson
+		let plus = (!contactPerson.isEmpty && !contactPhoneNumber.isEmpty) ?  ", " : ""
+		let phone = contactPhoneNumber.isEmpty ? "" : contactPhoneNumber
+		return person+plus+phone
+	}
+	
+	var itemsAsString: String {
+		return (items as NSArray).componentsJoinedByString(", ")
+	}
 	
 /*
 	struct OpeningHours {
@@ -75,11 +86,20 @@ class CollectionSite : Equatable{
 		let contactPerson = jsonDict["person"] as! String
 		let contactPhoneNumber = jsonDict["phone"] as! String
 		let helpersNeeded = jsonDict["helpers"] as! Bool
-		self.init(id:id, name:name, address:address, distance:distance, openingHint:openingHint, webAddress:webAddress, contactPerson:contactPerson, contactPhoneNumber:contactPhoneNumber, helpersNeeded:helpersNeeded, items:[String]())
-	}	
+		let items = jsonDict["items"] as! [String]
+		self.init(id:id, name:name, address:address, distance:distance, openingHint:openingHint, webAddress:webAddress, contactPerson:contactPerson, contactPhoneNumber:contactPhoneNumber, helpersNeeded:helpersNeeded, items:items)
+	}
+	
 }
 
 func ==(lhs: CollectionSite, rhs: CollectionSite) -> Bool {
 	return lhs === rhs
 	}
 
+
+extension CollectionSite : Hashable {
+	var hashValue: Int {
+		return id
+	}
+
+}

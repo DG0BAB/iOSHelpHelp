@@ -9,7 +9,7 @@
 import Foundation
 
 typealias JSONDictType = [String:AnyObject]
-typealias CollectionSitesType = [CollectionSite]
+typealias CollectionSitesType = Set<CollectionSite>
 
 class CollectionSiteContainer: NSObject {
 	static let CollectionSitesKVOKey = "CollectionSites"
@@ -34,19 +34,17 @@ class CollectionSiteContainer: NSObject {
 	
 	func addSite(site:CollectionSite) {
 		willChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
-		mutableCollectionSites.append(site)
+		mutableCollectionSites.insert(site)
 		didChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
 	}
 	
 	func removeSite(site:CollectionSite) {
-		if let index = indexOfSite(site) {
-			willChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
-			mutableCollectionSites.removeAtIndex(index)
-			didChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
-		}
+		willChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
+		mutableCollectionSites.remove(site)
+		didChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
 	}
 	
-	func indexOfSite(site:CollectionSite) -> Int? {
+	func indexOfSite(site:CollectionSite) -> SetIndex<CollectionSite>? {
 		return mutableCollectionSites.indexOf(site)
 	}
 }

@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+	static let LocationAccessAuthorizationChangedNotification = "LocationAccessAuthorizationChangedNotification"
+	static let LocationAccessAuthorizationChangedKey = "LocationAccessAuthorizationChangedKey"
+	
 	var window: UIWindow?
 
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+		if let window = window {
+			window.tintColor = UIColor.GreenColor
+		}
 		UserDefaults.prepareDefaultSettings()
 		return true
 	}
@@ -33,14 +40,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	}
 
+	let locationManager = CLLocationManager.init()
+
 	func applicationDidBecomeActive(application: UIApplication) {
-		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+		locationManager.delegate = self
+		
+		if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
+			locationManager.requestWhenInUseAuthorization()
+		} else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied {
+			showAuthorizeAlert()
+		} else if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
+			postAuthorizationNotificationWithStatus(CLLocationManager.authorizationStatus())
+		}
 	}
 
 	func applicationWillTerminate(application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 	}
 
+	private func showAuthorizeAlert() {
+		let alertController = UIAlertController(title: "Standort", message: "Sie müssen den Zugriff auf Ihren Standort erlauben, um diese App zu benutzen.", preferredStyle: UIAlertControllerStyle.Alert)
+		let settingsAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default) { (action) -> Void in
+			UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
+		}
+		alertController.addAction(settingsAction)
+		window?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+	}
 
+	private func postAuthorizationNotificationWithStatus(status:CLAuthorizationStatus) {
+		NSNotificationCenter.defaultCenter().postNotificationName(AppDelegate.LocationAccessAuthorizationChangedNotification, object: self, userInfo: [AppDelegate.LocationAccessAuthorizationChangedKey:Int(status.rawValue)])
+	}
+
+}
+
+// MARK: - CLLocationManager Delegate
+
+extension AppDelegate : CLLocationManagerDelegate {
+	
+	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+		if status == CLAuthorizationStatus.AuthorizedWhenInUse  ||
+			CLLocationManager.authorizationStatus() == CLAuthorizationStatus.Denied {
+			postAuthorizationNotificationWithStatus(status)
+		}
+	}
 }
 
