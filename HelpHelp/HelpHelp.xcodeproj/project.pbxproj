@@ -37,7 +37,7 @@
 		791E2B9B1BA4876200C1079C /* CollectionSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSite.swift; sourceTree = "<group>"; };
 		791E2B9D1BA4880A00C1079C /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		792150EB1BAAD3B600784FDC /* UIIColor+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIIColor+HelpHelp.swift"; sourceTree = "<group>"; };
-		792150F51BAB2D0000784FDC /* CollectionSiteAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteAddressViewController.swift; sourceTree = "<group>"; };
+		792150F51BAB2D0000784FDC /* CollectionSiteAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionSiteAddressViewController.swift; path = HelpHelp/CollectionSiteAddressViewController.swift; sourceTree = "<group>"; };
 		792E05881BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteMapDetailViewController.swift; sourceTree = "<group>"; };
 		792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteAnnotation.swift; sourceTree = "<group>"; };
 		7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteManager.swift; sourceTree = "<group>"; };
@@ -52,7 +52,7 @@
 		796E44D11BA0BCC500A27539 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		797AC6041BAD5EC000748E16 /* CLLocation+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+HelpHelp.swift"; sourceTree = "<group>"; };
 		797AC6061BAD610D00748E16 /* Int+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+HelpHelp.swift"; sourceTree = "<group>"; };
-		797AC6111BAE21D300748E16 /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		797AC6111BAE21D300748E16 /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreViewController.swift; path = HelpHelp/MoreViewController.swift; sourceTree = "<group>"; };
 		79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

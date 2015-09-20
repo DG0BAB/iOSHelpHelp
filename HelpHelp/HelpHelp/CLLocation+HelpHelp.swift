@@ -14,3 +14,9 @@ extension CLLocationCoordinate2D {
 		return CLLocation(latitude: self.latitude, longitude: self.longitude).distanceFromLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
 	}
 }
+
+extension CLLocationCoordinate2D: Equatable {}
+
+public func ==(lhs:CLLocationCoordinate2D, rhs:CLLocationCoordinate2D) -> Bool {
+	return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
+}
