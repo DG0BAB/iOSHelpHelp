@@ -14,50 +14,48 @@ class MapViewController: UIViewController {
 	static let CollectionSiteAnnotationIdentifier = "CollectionSiteAnnotation"
 	
 	@IBOutlet weak var mapView: MKMapView!
+	@IBOutlet weak var locateUserButton: UIButton!
 	private var startRegion: MKCoordinateRegion?
-	private var currentLocation:CLLocation = CLLocation(latitude: 0, longitude: 0)
-	private var currentRegion:MKCoordinateRegion?
 	private var currentAnnotations = Set<CollectionSiteAnnotation>()
 	
-	private lazy var locationManager:CLLocationManager = {
-		let locationManager = CLLocationManager.init()
-		locationManager.delegate = self
-		locationManager.distanceFilter = 10000
-		return locationManager
-	}()
-	
+	private var isAuthorized = false {
+		didSet {
+			if isAuthorized != oldValue {
+				prepareMapView()
+			}
+		}
+	}
+	private var isRendered = false {
+		didSet {
+			if isRendered != oldValue {
+				if startRegion == nil {
+					startRegion = mapView.region
+				}
+				prepareMapView()
+			}
+	}
+}
+
 // MARK: - View Lifecycle
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		mapView.delegate = self
-		startRegion = mapView.region
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "authorizationStatusChanged:", name: AppDelegate.LocationAccessAuthorizationChangedNotification, object: nil)
-	}
-
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-		locationManager.stopUpdatingLocation()
 	}
 
 	deinit {
 		NSNotificationCenter.defaultCenter().removeObserver(self)
 	}
+
+
+// MARK: - Notifications
 	
 	func authorizationStatusChanged(notification:NSNotification) {
 		if let userInfo = notification.userInfo {
 			let status = CLAuthorizationStatus.init(rawValue: Int32((userInfo[AppDelegate.LocationAccessAuthorizationChangedKey] as! Int)))
-			if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-				prepareMapView()
-			} else {
-				locationManager.stopUpdatingLocation()
-				mapView.region = startRegion!
-				for oneAnnotation in mapView.annotations {
-					mapView.removeAnnotation(oneAnnotation)
-				}
-			}
+			isAuthorized = status == CLAuthorizationStatus.AuthorizedWhenInUse
 		}
-		
 	}
 	
 // MARK: - Actions
@@ -81,7 +79,7 @@ class MapViewController: UIViewController {
 	
 	@IBAction func locateUserAction(sender: AnyObject) {
 		firstZoom = true
-		potentiallyZoomToUserLocation()
+		potentiallyZoomToUserLocation(mapView.userLocation)
 	}
 	
 // MARK: - Overrides From Superclass
@@ -93,73 +91,88 @@ class MapViewController: UIViewController {
 // MARK:- Private Stuff
 	
 	private func prepareMapView() {
-		mapView.showsUserLocation = true
-		mapView.userTrackingMode = .Follow
-		if !firstZoom {
+		if isAuthorized && isRendered {
+			mapView.showsUserLocation = true
+			mapView.userTrackingMode = .Follow
+			locateUserButton.enabled = true
+		} else {
+			mapView.showsUserLocation = false
+			mapView.userTrackingMode = .None
+			locateUserButton.enabled = false
+			CollectionSiteManager.reset()
 			firstZoom = true
-			potentiallyZoomToUserLocation()
 		}
 	}
 	
-	private var firstZoom = true
 	
-	private func potentiallyZoomToUserLocation() {
+	private var firstZoom = true
+	private func potentiallyZoomToUserLocation(userLocation:MKUserLocation) {
 		if firstZoom {
-			let coordinateRegion = UserDefaults.defaultCoordinateRegion(currentLocation.coordinate)
-			mapView.setRegion(coordinateRegion, animated: true)
-			showSiteAnnotationsInRegion(coordinateRegion)
-			firstZoom = false
+			if let coordinateRegion = CollectionSiteManager.currentManager?.coordinateRegionForNearestSiteToLocation(userLocation) {
+				mapView.setRegion(coordinateRegion, animated: true)
+				firstZoom = false
+			}
 		}
 
 	}
 	private func showSiteAnnotationsInRegion(region:MKCoordinateRegion) {
 		if let sitesWithinRegion = CollectionSiteManager.currentManager?.sitesWithinRegion(region) {
-			self.prepareAnnotations(sitesWithinRegion)
+			self.prepareAnnotationsForSites(sitesWithinRegion)
 		}
 	}
 	
-	private func prepareAnnotations(sites:CollectionSitesType) {
-		var newAnnotations = Set<CollectionSiteAnnotation>()
-		for oneSite in sites {
-			if let coordinate = CollectionSiteManager.currentManager?.coordinateForSite(oneSite) {
-				let anotation = CollectionSiteAnnotation(siteId: oneSite.id)
-				anotation.coordinate = coordinate
-				anotation.title = oneSite.name
-				let distance = String(format: "%2.2f", (oneSite.distance/1000))
-				anotation.subtitle = "Entfernung: "+distance+" km"
-				newAnnotations.insert(anotation);
+	private func prepareAnnotationsForSites(sites:CollectionSitesType) {
+		if isAuthorized && isRendered {
+			var newAnnotations = Set<CollectionSiteAnnotation>()
+			for oneSite in sites {
+				if let coordinate = CollectionSiteManager.currentManager?.coordinateForSite(oneSite) {
+					let anotation = CollectionSiteAnnotation(siteId: oneSite.id)
+					anotation.coordinate = coordinate
+					anotation.title = oneSite.name
+					let distance = String(format: "%2.2f", (oneSite.distance/1000))
+					anotation.subtitle = "Entfernung: "+distance+" km"
+					newAnnotations.insert(anotation);
+				}
 			}
+			let annotationsToRemnove = currentAnnotations.subtract(newAnnotations)
+			let annotationsToAdd = newAnnotations.subtract(currentAnnotations)
+			newAnnotations = currentAnnotations.subtract(annotationsToRemnove)
+			newAnnotations = newAnnotations.union(annotationsToAdd)
+			if currentAnnotations != newAnnotations {
+				mapView.removeAnnotations(Array(annotationsToRemnove))
+				mapView.addAnnotations(Array(annotationsToAdd))
+				currentAnnotations = newAnnotations
+			}
+		} else {
+			for oneAnnotation in mapView.annotations {
+				mapView.removeAnnotation(oneAnnotation)
+			}
+			self.currentAnnotations.removeAll()
 		}
-		let annotationsToRemnove = currentAnnotations.subtract(newAnnotations)
-		let annotationsToAdd = newAnnotations.subtract(currentAnnotations)
-		newAnnotations = currentAnnotations.subtract(annotationsToRemnove)
-		newAnnotations = newAnnotations.union(annotationsToAdd)
-		mapView.removeAnnotations(Array(annotationsToRemnove))
-		mapView.addAnnotations(Array(annotationsToAdd))
-		currentAnnotations = newAnnotations
 	}
 }
 
-// MARK: - CLLocationManager Delegate
-
-extension MapViewController : CLLocationManagerDelegate {
-	
-	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		
-		if let userLocation = locations.last where currentLocation.distanceFromLocation(userLocation) > locationManager.distanceFilter{
-			self.currentLocation = userLocation
-			CollectionSiteManager.loadSitesForCoordinate(userLocation.coordinate) { siteManager in self.potentiallyZoomToUserLocation() }
-		}
-	}
-	
-}
 
 // MARK: - MAPViewController Delegate
 
 extension MapViewController : MKMapViewDelegate {
+
+	func mapView(mapView: MKMapView, didChangeUserTrackingMode mode: MKUserTrackingMode, animated: Bool) {
+		if let region = startRegion where mode == MKUserTrackingMode.None && (!isRendered || !isAuthorized){
+			mapView.region = region
+		}
+	}
 	
 	func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
-		self.locationManager.startUpdatingLocation()
+		isRendered = fullyRendered
+	}
+	
+	func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+		CollectionSiteManager.loadSitesForCoordinate(userLocation.coordinate, urlString: "https://helphelp2.com") { siteManager in self.potentiallyZoomToUserLocation(userLocation) }
+	}
+
+	func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+		showSiteAnnotationsInRegion(mapView.region)
 	}
 	
 	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -185,13 +198,6 @@ extension MapViewController : MKMapViewDelegate {
 		infoButtonAction(view, control: control)
 	}
 	
-	func mapView(mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-		currentRegion = mapView.region
-		if currentRegion?.center.latitude != startRegion?.center.latitude {
-			showSiteAnnotationsInRegion(currentRegion!)
-		}
-
-	}
 }
 
 // MARK: - MKCoordinateRegion Extension

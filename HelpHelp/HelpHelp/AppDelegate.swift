@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		if let window = window {
-			window.tintColor = UIColor.GreenColor
+			window.tintColor = UIColor.colorWithWebColor("#0092a8", alpha: 1.0)
 		}
 		UserDefaults.prepareDefaultSettings()
 		return true

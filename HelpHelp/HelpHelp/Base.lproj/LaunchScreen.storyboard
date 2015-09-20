@@ -30,12 +30,12 @@
                                 <rect key="frame" x="20" y="552" width="560" height="28"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.1265942697753942" green="0.56369236932761235" blue="0.67129878393665154" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="SGm-Gb-cEe" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" multiplier="1/1.88" id="41c-io-gB2"/>
                             <constraint firstItem="TPh-z6-wdx" firstAttribute="top" relation="lessThanOrEqual" secondItem="SGm-Gb-cEe" secondAttribute="bottom" constant="320" id="8ae-Mq-YqA"/>

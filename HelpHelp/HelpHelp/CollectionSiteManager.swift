@@ -15,21 +15,41 @@ typealias SitesLoadingCompletionType = (CollectionSiteManager) -> Void
 class CollectionSiteManager {
 	
 	static var currentManager:CollectionSiteManager?
-	static var currentLocation:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+	private static var currentCoordinate:CLLocationCoordinate2D?
+	private static var lastUpdate:NSDate?
 	
-	class func loadSitesForCoordinate(coordinate:CLLocationCoordinate2D, completion:SitesLoadingCompletionType? = nil) {
+	class func loadSitesForCoordinate(coordinate:CLLocationCoordinate2D, urlString:String, completion:SitesLoadingCompletionType? = nil) {
 		
-		self.currentLocation = coordinate
-		let communicator = HTTPCommunicator(url:"https://helphelp2.com")
+		var shouldLoad = false
+		
+		if let currentCoordinate = self.currentCoordinate {
+			if  currentCoordinate.distanceFromCoordinate(coordinate) > UserDefaults.distanceFilter() {
+				shouldLoad = true
+			} else if let lastUpdate = self.lastUpdate {
+				if NSDate().timeIntervalSinceDate(lastUpdate) > 10.minutes {
+					shouldLoad = true
+				}
+			}
+		} else {
+			shouldLoad = true
+		}
+		
+		guard shouldLoad else { return }
+		
+		let communicator = HTTPCommunicator(url:urlString)
 		
 		do {
-			try communicator?.GET("/heart/places/?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", success: { (resultData) -> Void in
+			try communicator?.GET("/heart/places?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", success: { (resultData) -> Void in
 				do {
 					let jsonDict = try NSJSONSerialization.JSONObjectWithData(resultData, options: NSJSONReadingOptions.AllowFragments) as! JSONDictType
 					let container = CollectionSiteContainer(jsonDict: jsonDict)
 					currentManager = CollectionSiteManager(container: container)
+					self.currentCoordinate = coordinate
+					self.lastUpdate = NSDate()
 					print("Sites read")
-					completion?(currentManager!)
+					dispatch_async(dispatch_get_main_queue()) {
+						completion?(currentManager!)
+					}
 				} catch {
 					
 				}
@@ -43,10 +63,17 @@ class CollectionSiteManager {
 		}
 	}
 	
+	class func reset() {
+		currentCoordinate = nil
+		currentManager = nil
+	}
+	
 	let collectionSiteContainer:CollectionSiteContainer
+	var orderedSites:[CollectionSite]?
 	
 	required init(container:CollectionSiteContainer) {
 		self.collectionSiteContainer = container
+		orderedSites = collectionSiteContainer.collectionSites.sort({$0.distance < $1.distance})
 	}
 	
 	func siteForId(siteId:Int) -> CollectionSite? {
@@ -54,6 +81,10 @@ class CollectionSiteManager {
 			return collectionSiteContainer.collectionSites[index]
 		}
 		return nil
+	}
+	
+	func nearestSite() -> CollectionSite? {
+		return orderedSites?.first
 	}
 	
 	func sitesWithinRegion(region:MKCoordinateRegion?) -> CollectionSitesType! {
@@ -70,6 +101,14 @@ class CollectionSiteManager {
 	
 	func coordinateForSite(site:CollectionSite) -> CLLocationCoordinate2D {
 		return CLLocationCoordinate2D(latitude: site.address.latitude, longitude: site.address.longitude)
+	}
+	
+	func coordinateRegionForNearestSiteToLocation(location:MKUserLocation) -> MKCoordinateRegion {
+		if let nearestSite = nearestSite() {
+			return MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(fabs(nearestSite.address.latitude-location.coordinate.latitude)*2.7, fabs(nearestSite.address.longitude-location.coordinate.longitude)*2.7))
+		} else {
+			return UserDefaults.defaultCoordinateRegion(location.coordinate)
+		}
 	}
 	
 	/// Standardises and angle to [-180 to 180] degrees
