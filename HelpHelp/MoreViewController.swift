@@ -44,6 +44,11 @@ class MoreViewController: UIViewController {
 		attributedText.appendAttributedString(NSAttributedString(string: "\nHofmannstraße 30", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\n81379 München", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\ninfo@helphelp2.com", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+		
+		attributedText.appendAttributedString(NSAttributedString(string: "\n\n\nIcons made by ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10)]))
+		attributedText.appendAttributedString(NSAttributedString(string: "robin kylander", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10), NSLinkAttributeName : NSURL(string: "http://www.flaticon.com/authors/robin-kylander")!]))
+		attributedText.appendAttributedString(NSAttributedString(string: " from ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10)]))
+		attributedText.appendAttributedString(NSAttributedString(string: "www.flaticon.com", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10), NSLinkAttributeName : NSURL(string: "http://www.flaticon.com")!]))
 		self.textView.attributedText = attributedText
 	}
 	
