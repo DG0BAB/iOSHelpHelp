@@ -227,6 +227,11 @@
 					796E44BF1BA0BCC500A27539 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = B46F95JC8U;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
