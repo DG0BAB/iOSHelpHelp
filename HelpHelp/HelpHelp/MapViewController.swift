@@ -85,6 +85,7 @@ class MapViewController: UIViewController {
 // MARK: - Overrides From Superclass
 	
 	override func didReceiveMemoryWarning() {
+		NSURLCache.sharedURLCache().removeAllCachedResponses()
 		super.didReceiveMemoryWarning()
 	}
 

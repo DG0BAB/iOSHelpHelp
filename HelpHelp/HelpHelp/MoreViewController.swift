@@ -36,15 +36,17 @@ class MoreViewController: UIViewController {
 		
 		let attributedText = NSMutableAttributedString(string: "helphelp²", attributes: [NSFontAttributeName : UIFont.boldSystemFontOfSize(17), NSLinkAttributeName : NSURL(string: "https://helphelp2.com")!])
 			
-		attributedText.appendAttributedString(NSAttributedString(string: "\n\niOS Version entwickelt von Joachim Deelen", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
-		attributedText.appendAttributedString(NSAttributedString(string: "\nfür micabo-software UG (haftungsbeschränkt)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
-		attributedText.appendAttributedString(NSAttributedString(string: "\n\nUm Adressen hinzuzufügen gehe zu: ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
-		attributedText.appendAttributedString(NSAttributedString(string: "\nhttps://helphelp2.com/admin", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\n\nImpressum: Rüdiger Trost / Lev Stipakov", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\nHofmannstraße 30", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\n81379 München", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\ninfo@helphelp2.com", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 		
+		attributedText.appendAttributedString(NSAttributedString(string: "\n\nUm Adressen hinzuzufügen gehe zu: ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+		attributedText.appendAttributedString(NSAttributedString(string: "\nhttps://helphelp2.com/admin", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+		
+		attributedText.appendAttributedString(NSAttributedString(string: "\n\niOS Version entwickelt von Joachim Deelen", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(11)]))
+		attributedText.appendAttributedString(NSAttributedString(string: "\nfür micabo-software UG", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(11), NSLinkAttributeName : NSURL(string: "http://www.micabo.de")!]))
+		attributedText.appendAttributedString(NSAttributedString(string: " (haftungsbeschränkt)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(11)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "\n\n\nIcons made by ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10)]))
 		attributedText.appendAttributedString(NSAttributedString(string: "robin kylander", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10), NSLinkAttributeName : NSURL(string: "http://www.flaticon.com/authors/robin-kylander")!]))
 		attributedText.appendAttributedString(NSAttributedString(string: " from ", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(10)]))

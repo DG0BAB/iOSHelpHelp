@@ -14,6 +14,9 @@ enum HTTPCommunicatorError: ErrorType {
 
 class HTTPCommunicator: Communicator {
 	
+	var session:NSURLSession?
+	var task:NSURLSessionTask?
+	
 	func GET(path:String, success:Communicator.SuccessType, failure:Communicator.FailureType) throws -> Void {
 		
 		guard !path.isEmpty else { throw HTTPCommunicatorError.MissingPath }
@@ -21,9 +24,10 @@ class HTTPCommunicator: Communicator {
 		let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
 		sessionConfiguration.timeoutIntervalForRequest = 2
 		
-		let session = NSURLSession(configuration: sessionConfiguration)
+		session = NSURLSession(configuration: sessionConfiguration)
 		if  let requestURL = NSURL(string: path, relativeToURL: URL) {
-			let task = session.dataTaskWithURL(requestURL) { data, response, error in
+			task = session!.dataTaskWithURL(requestURL) { [weak self] data, response, error in
+				self?.session?.invalidateAndCancel()
 				if let response = response as? NSHTTPURLResponse {
 					
 					switch response.statusCode {
@@ -46,7 +50,7 @@ class HTTPCommunicator: Communicator {
 					}
 				}
 			}
-			task.resume()
+			task!.resume()
 		}
 	}
 }

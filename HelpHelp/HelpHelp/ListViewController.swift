@@ -80,6 +80,7 @@ class ListViewController: UIViewController {
 	}
 
 	override func didReceiveMemoryWarning() {
+		NSURLCache.sharedURLCache().removeAllCachedResponses()
 		super.didReceiveMemoryWarning()
 	}
 }
