@@ -407,9 +407,9 @@
 				INFOPLIST_FILE = HelpHelp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.HelpHelp;
+				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.helphelp2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "548074a8-d4ff-4c02-8c27-0b49182a3f0b";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -423,9 +423,9 @@
 				INFOPLIST_FILE = HelpHelp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.HelpHelp;
+				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.helphelp2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "cd37fe3a-4bc7-4895-b02b-e6d7170e85c2";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
