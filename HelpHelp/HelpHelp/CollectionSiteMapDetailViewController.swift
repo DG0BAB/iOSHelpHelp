@@ -49,7 +49,7 @@ class CollectionSiteMapDetailViewController: UIViewController {
 		if let collectionSite = self.collectionSite {
 			siteNameLabel.text = collectionSite.name
 			openingHintLabel.text = collectionSite.openingHint
-			helpersWanted.text = collectionSite.helpersNeeded ? "Freiwillige Helfer gesucht!" : ""
+			helpersWanted.text = collectionSite.helpersNeeded ? LocalizedString("helphelp2.siteDetail.map.helpersNeeded") : ""
 			itemsTextView.text = collectionSite.itemsAsString
 		}
 		
@@ -58,13 +58,13 @@ class CollectionSiteMapDetailViewController: UIViewController {
 			attributedText.appendAttributedString(NSAttributedString(string: "\n\(collectionSite.address.zip)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 			attributedText.appendAttributedString(NSAttributedString(string: " \(collectionSite.address.city)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 			if !collectionSite.contact.isEmpty {
-				attributedText.appendAttributedString(NSAttributedString(string: "\n\nKontakt: \(collectionSite.contact)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+				attributedText.appendAttributedString(NSAttributedString(string: "\n\n\(LocalizedString("helphelp2.siteDetail.map.contact")) \(collectionSite.contact)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 			}
 			if !collectionSite.webAddress.isEmpty {
-				attributedText.appendAttributedString(NSAttributedString(string: "\nWebseite: \(collectionSite.webAddress)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+				attributedText.appendAttributedString(NSAttributedString(string: "\n\(LocalizedString("helphelp2.siteDetail.map.webAddress")) \(collectionSite.webAddress)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 			}
 			if !collectionSite.openingHint.isEmpty {
-				attributedText.appendAttributedString(NSAttributedString(string: "\nWeitere Angaben: \(collectionSite.openingHint)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+				attributedText.appendAttributedString(NSAttributedString(string: "\n\(LocalizedString("helphelp2.siteDetail.map.more")) \(collectionSite.openingHint)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 			}
 			addressTextView.attributedText = attributedText
 		}

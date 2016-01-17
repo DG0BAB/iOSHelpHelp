@@ -59,8 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	private func showAuthorizeAlert() {
-		let alertController = UIAlertController(title: "Standort", message: "Sie müssen den Zugriff auf Ihren Standort erlauben, um diese App zu benutzen.", preferredStyle: UIAlertControllerStyle.Alert)
-		let settingsAction = UIAlertAction(title: "Einstellungen", style: UIAlertActionStyle.Default) { (action) -> Void in
+		let alertController = UIAlertController(title: LocalizedString("helphelp2.accessLocation.title"), message: LocalizedString("helphelp2.accessLocation.text"), preferredStyle: UIAlertControllerStyle.Alert)
+		let settingsAction = UIAlertAction(title: LocalizedString("helphelp2.accessLocation.action.settings"), style: UIAlertActionStyle.Default) { (action) -> Void in
 			UIApplication.sharedApplication().openURL(NSURL(string:UIApplicationOpenSettingsURLString)!)
 		}
 		alertController.addAction(settingsAction)

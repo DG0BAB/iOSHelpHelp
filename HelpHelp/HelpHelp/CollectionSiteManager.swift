@@ -40,22 +40,24 @@ class CollectionSiteManager {
 		if let communicator = HTTPCommunicator(url:urlString) {
 			self.communicator = communicator
 			do {
-				try communicator.GET("/heart/places?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)", success: { (resultData) -> Void in
-					do {
-						let jsonDict = try NSJSONSerialization.JSONObjectWithData(resultData, options: NSJSONReadingOptions.AllowFragments) as! JSONDictType
-						let container = CollectionSiteContainer(jsonDict: jsonDict)
-						currentManager = CollectionSiteManager(container: container)
-						self.currentCoordinate = coordinate
-						self.lastUpdate = NSDate()
-						print("Sites read")
-						dispatch_async(dispatch_get_main_queue()) {
-							completion?(currentManager!)
+				try communicator.GET("/heart/places?lat=\(coordinate.latitude)&lon=\(coordinate.longitude)",
+					success: { (resultData) -> Void in
+						do {
+							let jsonDict = try NSJSONSerialization.JSONObjectWithData(resultData, options: NSJSONReadingOptions.AllowFragments) as! JSONDictType
+							let container = CollectionSiteContainer(jsonDict: jsonDict)
+							currentManager = CollectionSiteManager(container: container)
+							self.currentCoordinate = coordinate
+							self.lastUpdate = NSDate()
+							print("Sites read")
+							dispatch_async(dispatch_get_main_queue()) {
+								completion?(currentManager!)
+							}
+							self.communicator = nil
+						} catch {
+							
 						}
-						self.communicator = nil
-					} catch {
-						
-					}
-					}, failure: { (error) -> Void in
+					},
+					failure: { (error) -> Void in
 						print("Fehler: \(error)")
 				})
 			} catch HTTPCommunicatorError.MissingPath {

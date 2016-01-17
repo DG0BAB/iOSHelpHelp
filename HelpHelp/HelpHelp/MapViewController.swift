@@ -15,6 +15,8 @@ class MapViewController: UIViewController {
 	
 	@IBOutlet weak var mapView: MKMapView!
 	@IBOutlet weak var locateUserButton: UIButton!
+	@IBOutlet weak var mapTabBarItem: UITabBarItem!
+	
 	private var startRegion: MKCoordinateRegion?
 	private var currentAnnotations = Set<CollectionSiteAnnotation>()
 	
@@ -40,6 +42,7 @@ class MapViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		mapTabBarItem.title = LocalizedString("helphelp2.mainNavigation.map")
 		mapView.delegate = self
 		NSNotificationCenter.defaultCenter().addObserver(self, selector: "authorizationStatusChanged:", name: AppDelegate.LocationAccessAuthorizationChangedNotification, object: nil)
 	}
@@ -131,7 +134,7 @@ class MapViewController: UIViewController {
 					anotation.coordinate = coordinate
 					anotation.title = oneSite.name
 					let distance = String(format: "%2.2f", (oneSite.distance/1000))
-					anotation.subtitle = "Entfernung: "+distance+" km"
+					anotation.subtitle = LocalizedString("helphelp2.siteAnnotation.distance")+" "+distance+" "+LocalizedString("helphelp2.siteAnnotation.distance.unit")
 					newAnnotations.insert(anotation);
 				}
 			}
