@@ -24,9 +24,12 @@
 		796E44CB1BA0BCC500A27539 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796E44C91BA0BCC500A27539 /* Main.storyboard */; };
 		796E44CD1BA0BCC500A27539 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 796E44CC1BA0BCC500A27539 /* Assets.xcassets */; };
 		796E44D01BA0BCC500A27539 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796E44CE1BA0BCC500A27539 /* LaunchScreen.storyboard */; };
+		79770D521C0A1CBA0004618F /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79770D511C0A1CBA0004618F /* Functions.swift */; };
+		79770D541C0A1D5A0004618F /* String+HelpHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79770D531C0A1D5A0004618F /* String+HelpHelp.swift */; };
 		797AC6051BAD5EC000748E16 /* CLLocation+HelpHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AC6041BAD5EC000748E16 /* CLLocation+HelpHelp.swift */; };
 		797AC6071BAD610D00748E16 /* Int+HelpHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AC6061BAD610D00748E16 /* Int+HelpHelp.swift */; };
 		797AC6121BAE21D300748E16 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797AC6111BAE21D300748E16 /* MoreViewController.swift */; };
+		799E12C01C3305D0002B2A88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 799E12C21C3305D0002B2A88 /* Localizable.strings */; };
 		79E097EB1BA49BF500D838FD /* CollectionSiteContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,13 +49,20 @@
 		796E44C31BA0BCC500A27539 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796E44C51BA0BCC500A27539 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		796E44C71BA0BCC500A27539 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		796E44CA1BA0BCC500A27539 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		796E44CC1BA0BCC500A27539 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		796E44CF1BA0BCC500A27539 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		796E44D11BA0BCC500A27539 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79770D511C0A1CBA0004618F /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		79770D531C0A1D5A0004618F /* String+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HelpHelp.swift"; sourceTree = "<group>"; };
 		797AC6041BAD5EC000748E16 /* CLLocation+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+HelpHelp.swift"; sourceTree = "<group>"; };
 		797AC6061BAD610D00748E16 /* Int+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+HelpHelp.swift"; sourceTree = "<group>"; };
 		797AC6111BAE21D300748E16 /* MoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoreViewController.swift; path = HelpHelp/MoreViewController.swift; sourceTree = "<group>"; };
+		79D12AD21C333D140075304A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		79D12AD71C333E7B0075304A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		79D12AD81C333E7C0075304A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		79D7B2B21C4AB6EF002F15C5 /* createStrings.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = createStrings.rb; path = ../../Utilities/Localization/createStrings.rb; sourceTree = "<group>"; };
+		79D7B2C51C4AF5CE002F15C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		79D7B2C61C4AF5D7002F15C5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		79D7B2C81C4AF690002F15C5 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		79E097EA1BA49BF500D838FD /* CollectionSiteContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +111,7 @@
 				792150EB1BAAD3B600784FDC /* UIIColor+HelpHelp.swift */,
 				797AC6041BAD5EC000748E16 /* CLLocation+HelpHelp.swift */,
 				797AC6061BAD610D00748E16 /* Int+HelpHelp.swift */,
+				79770D531C0A1D5A0004618F /* String+HelpHelp.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -154,7 +165,9 @@
 		796E44C21BA0BCC500A27539 /* HelpHelp */ = {
 			isa = PBXGroup;
 			children = (
+				79D7B2B11C4AB6AD002F15C5 /* Localization */,
 				796E44C31BA0BCC500A27539 /* AppDelegate.swift */,
+				79770D511C0A1CBA0004618F /* Functions.swift */,
 				7949B12D1BA58A70001F6A76 /* CollectionSite */,
 				792E05871BA75B06000CB093 /* GUI */,
 				791E2B921BA425F200C1079C /* Communication */,
@@ -195,6 +208,15 @@
 			name = "More View";
 			sourceTree = "<group>";
 		};
+		79D7B2B11C4AB6AD002F15C5 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				79D7B2B21C4AB6EF002F15C5 /* createStrings.rb */,
+				799E12C21C3305D0002B2A88 /* Localizable.strings */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -202,6 +224,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 796E44D41BA0BCC500A27539 /* Build configuration list for PBXNativeTarget "HelpHelp" */;
 			buildPhases = (
+				79D7B2B41C4AC01D002F15C5 /* Prepare Localizations */,
 				796E44BC1BA0BCC500A27539 /* Sources */,
 				796E44BD1BA0BCC500A27539 /* Frameworks */,
 				796E44BE1BA0BCC500A27539 /* Resources */,
@@ -237,11 +260,14 @@
 			};
 			buildConfigurationList = 796E44BB1BA0BCC500A27539 /* Build configuration list for PBXProject "HelpHelp" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = de;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				de,
 				Base,
+				en,
+				fr,
+				nl,
 			);
 			mainGroup = 796E44B71BA0BCC500A27539;
 			productRefGroup = 796E44C11BA0BCC500A27539 /* Products */;
@@ -259,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				796E44D01BA0BCC500A27539 /* LaunchScreen.storyboard in Resources */,
+				799E12C01C3305D0002B2A88 /* Localizable.strings in Resources */,
 				796E44CD1BA0BCC500A27539 /* Assets.xcassets in Resources */,
 				796E44CB1BA0BCC500A27539 /* Main.storyboard in Resources */,
 			);
@@ -266,11 +293,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		79D7B2B41C4AC01D002F15C5 /* Prepare Localizations */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare Localizations";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ../Utilities/Localization\nruby ./createStrings.rb";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		796E44BC1BA0BCC500A27539 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79770D541C0A1D5A0004618F /* String+HelpHelp.swift in Sources */,
 				792150F61BAB2D0000784FDC /* CollectionSiteAddressViewController.swift in Sources */,
 				791E2B961BA454B200C1079C /* Communicator.swift in Sources */,
 				796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */,
@@ -282,6 +327,7 @@
 				791E2B941BA4523600C1079C /* HTTPCommunicator.swift in Sources */,
 				797AC6121BAE21D300748E16 /* MoreViewController.swift in Sources */,
 				797AC6051BAD5EC000748E16 /* CLLocation+HelpHelp.swift in Sources */,
+				79770D521C0A1CBA0004618F /* Functions.swift in Sources */,
 				79E097EB1BA49BF500D838FD /* CollectionSiteContainer.swift in Sources */,
 				791E2B991BA45D1700C1079C /* HTTPStatusCodes.swift in Sources */,
 				796E44C61BA0BCC500A27539 /* MapViewController.swift in Sources */,
@@ -298,7 +344,7 @@
 		796E44C91BA0BCC500A27539 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				796E44CA1BA0BCC500A27539 /* Base */,
+				79D12AD71C333E7B0075304A /* Base */,
 			);
 			name = Main.storyboard;
 			path = HelpHelp;
@@ -307,9 +353,20 @@
 		796E44CE1BA0BCC500A27539 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				796E44CF1BA0BCC500A27539 /* Base */,
+				79D12AD81C333E7C0075304A /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		799E12C21C3305D0002B2A88 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79D12AD21C333D140075304A /* de */,
+				79D7B2C51C4AF5CE002F15C5 /* en */,
+				79D7B2C61C4AF5D7002F15C5 /* fr */,
+				79D7B2C81C4AF690002F15C5 /* nl */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
