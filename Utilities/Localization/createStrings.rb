@@ -2,7 +2,7 @@
 
 # 13/01/2016
 # Joachim Deelen jdeelen@micabo.de
-# Transforms a .tsv into an XCode .strings file
+# Transforms a .tsv into an Xcode .strings file
 # Download TSV-File from GoogleDocs to read strings for different locales from table-columns
 # Based on the idea from Constantine Karlis. dino@constantinekarlis.com
 # © 2016 micabo-software UG
@@ -47,7 +47,8 @@ fallbackFilePath = "#{currentDir}/#{fallbackFileName}"
 projectDir = ENV["PROJECT_DIR"]
 projectName = ENV["PROJECT_NAME"]
 outFileBaseDir = projectDir + "/" + projectName
-outFileName = "Localizable.strings"
+outFileNameStrings = "Localizable.strings"
+outFileNamePlist = "InfoPlist.strings"
 
 stringsContainers = Array.new
 tsvFile = nil
@@ -97,12 +98,25 @@ stringsContainers.each { |stringContainer|
 			unless File.directory?(localeDir)
 				Dir.mkdir(localeDir)
 			end
-			out = ""
+			stringsOut = ""
+			plistOut = ""
 			stringContainer.strings.each { |key, value|
 				value = value.gsub("\"", "\\\"")
-				out += "\"#{key}\" = \"#{value}\";\n"
-				File.write("#{localeDir}/#{outFileName}", out)
+				outkey = key.dup
+				slice = outkey.slice!("InfoPlist.")
+				out = "\"#{outkey}\" = \"#{value}\";\n"
+				unless slice == nil  then
+					plistOut += out
+				else
+					stringsOut += out
+				end
 			}
+			if plistOut.size > 0 then
+				File.write("#{localeDir}/#{outFileNamePlist}", plistOut)
+			end
+			if stringsOut.size > 0 then
+				File.write("#{localeDir}/#{outFileNameStrings}", stringsOut)
+			end
 			p "Wrote localizations for #{locale} into #{localeDir}"
 		end
     }
