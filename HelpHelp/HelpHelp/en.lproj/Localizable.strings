@@ -1,5 +1,5 @@
 "helphelp2.accessLocation.title" = "Location";
-"helphelp2.accessLocation.text" = "";
+"helphelp2.accessLocation.text" = "To use this App you need to grant access to your current location.";
 "helphelp2.accessLocation.action.settings" = "Settings";
 "helphelp2.siteAnnotation.distance" = "Distance:";
 "helphelp2.siteAnnotation.distance.unit" = "km";

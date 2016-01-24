@@ -1,6 +1,6 @@
 Internal App Key	de, (Deutsch)	en, (English)	fr, (Français)	nl, (Dutch)
 helphelp2.accessLocation.title	Standort	Location	Site	Locatie
-helphelp2.accessLocation.text	Sie müssen den Zugriff auf Ihren Standort erlauben, um diese App zu benutzen.			
+helphelp2.accessLocation.text	Sie müssen den Zugriff auf Ihren Standort erlauben, um diese App zu benutzen.	To use this App you need to grant access to your current location.		
 helphelp2.accessLocation.action.settings	Einstellungen	Settings	Réglages	Instellingen
 helphelp2.siteAnnotation.distance	Entfernung:	Distance:	Distance:	
 helphelp2.siteAnnotation.distance.unit	km	km	km	km
@@ -20,3 +20,4 @@ helphelp2.general.from	von	from	de
 helphelp2.mainNavigation.map	Karte	Map	Carte	
 helphelp2.mainNavigation.list	Liste	List	Liste	
 helphelp2.mainNavigation.more	Mehr	More	Plus	Meer
+InfoPlist.NSLocationWhenInUseUsageDescription	Helphelp² benötigt Ihren Standort um Sammelstellen in Ihrer Nähe anzeigen zu können.	Helphelp² needs your current location to display collection sites near you.	Helphelp² besoin de votre emplacement actuel pour afficher les sites de collecte près de chez vous.	Helphelp² moet toegang hebben tot uw locatie, om u inzamelplaatsen in de buurt te tonen.

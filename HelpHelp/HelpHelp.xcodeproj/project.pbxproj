@@ -18,6 +18,7 @@
 		792E058B1BA76DF0000CB093 /* CollectionSiteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */; };
 		7949B12F1BA58A9B001F6A76 /* CollectionSiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */; };
 		7949B1321BA590A8001F6A76 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B1311BA590A8001F6A76 /* UserDefaults.swift */; };
+		7962FCD01C529AD5007347C0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7962FCD21C529AD5007347C0 /* InfoPlist.strings */; };
 		796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C31BA0BCC500A27539 /* AppDelegate.swift */; };
 		796E44C61BA0BCC500A27539 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C51BA0BCC500A27539 /* MapViewController.swift */; };
 		796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C71BA0BCC500A27539 /* ListViewController.swift */; };
@@ -45,6 +46,10 @@
 		792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteAnnotation.swift; sourceTree = "<group>"; };
 		7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteManager.swift; sourceTree = "<group>"; };
 		7949B1311BA590A8001F6A76 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		7962FCD11C529AD5007347C0 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7962FCD31C529ADC007347C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7962FCD41C529ADE007347C0 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7962FCD51C529ADF007347C0 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		796E44C01BA0BCC500A27539 /* HelpHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		796E44C31BA0BCC500A27539 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796E44C51BA0BCC500A27539 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +218,7 @@
 			children = (
 				79D7B2B21C4AB6EF002F15C5 /* createStrings.rb */,
 				799E12C21C3305D0002B2A88 /* Localizable.strings */,
+				7962FCD21C529AD5007347C0 /* InfoPlist.strings */,
 			);
 			name = Localization;
 			sourceTree = "<group>";
@@ -288,6 +294,7 @@
 				799E12C01C3305D0002B2A88 /* Localizable.strings in Resources */,
 				796E44CD1BA0BCC500A27539 /* Assets.xcassets in Resources */,
 				796E44CB1BA0BCC500A27539 /* Main.storyboard in Resources */,
+				7962FCD01C529AD5007347C0 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +348,17 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		7962FCD21C529AD5007347C0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7962FCD11C529AD5007347C0 /* de */,
+				7962FCD31C529ADC007347C0 /* en */,
+				7962FCD41C529ADE007347C0 /* fr */,
+				7962FCD51C529ADF007347C0 /* nl */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		796E44C91BA0BCC500A27539 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
