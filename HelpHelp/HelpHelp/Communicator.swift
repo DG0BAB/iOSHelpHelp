@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Communicator {
+class Communicator : NSObject {
 	typealias SuccessType = (resultData:NSData) -> Void
 	typealias FailureType = (error:CommunicatorError) -> Void
 	

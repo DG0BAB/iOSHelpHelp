@@ -14,43 +14,71 @@ enum HTTPCommunicatorError: ErrorType {
 
 class HTTPCommunicator: Communicator {
 	
-	var session:NSURLSession?
-	var task:NSURLSessionTask?
+	private var sessionConfiguration: NSURLSessionConfiguration {
+		get {
+			let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+			configuration.timeoutIntervalForRequest = 2
+			return configuration
+		}
+	}
 	
-	func GET(path:String, success:Communicator.SuccessType, failure:Communicator.FailureType) throws -> Void {
+	private var session: NSURLSession {
+		get {
+			return NSURLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
+		}
+	}
+	private var data: NSMutableData?
+	private var onSuccess: Communicator.SuccessType?
+	private var onFailure: Communicator.FailureType?
+	
+	func GET(path:String, success: Communicator.SuccessType, failure: Communicator.FailureType) throws -> Void {
 		
 		guard !path.isEmpty else { throw HTTPCommunicatorError.MissingPath }
 		
-		let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-		sessionConfiguration.timeoutIntervalForRequest = 2
-		
-		session = NSURLSession(configuration: sessionConfiguration)
-		if  let requestURL = NSURL(string: path, relativeToURL: URL) {
-			task = session!.dataTaskWithURL(requestURL) { [weak self] data, response, error in
-				self?.session?.invalidateAndCancel()
-				if let response = response as? NSHTTPURLResponse {
-					
-					switch response.statusCode {
-						
-					case HTTPStatusCode.OK_200.rawValue:
-						if let data = data {
-							success(resultData:data)
-						}
-						
-					case HTTPStatusCode.ClientError.startValue...HTTPStatusCode.ClientError.endValue:
-						print("Client-Error")
-						failure(error: CommunicatorError.Client(error))
-						
-					case HTTPStatusCode.ServerError.startValue...HTTPStatusCode.ServerError.endValue:
-						print("Server-Error")
-						failure(error: CommunicatorError.Server(error))
-						
-					default: break
-						
-					}
-				}
+		if let requestURL = NSURL(string: path, relativeToURL: URL) {
+			onSuccess = success
+			onFailure = failure
+			session.dataTaskWithURL(requestURL).resume()
+		}
+	}
+}
+
+extension HTTPCommunicator : NSURLSessionDataDelegate {
+	
+	func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
+		if let response = response as? NSHTTPURLResponse {
+			switch response.statusCode {
+				
+			case HTTPStatusCode.OK_200.rawValue:
+				data = NSMutableData()
+				completionHandler(.Allow)
+				
+			case HTTPStatusCode.ClientError.startValue...HTTPStatusCode.ClientError.endValue:
+				print("Client-Error")
+				onFailure?(error: .Client(nil))
+				completionHandler(.Cancel)
+				
+			case HTTPStatusCode.ServerError.startValue...HTTPStatusCode.ServerError.endValue:
+				print("Server-Error")
+				onFailure?(error: .Server(nil))
+				completionHandler(.Cancel)
+				
+			default: break
+				
 			}
-			task!.resume()
+		}
+	}
+
+	func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+		print("Data received: \(data)\n\n")
+		self.data?.appendData(data)
+	}
+	
+	func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+		if let error = error {
+			onFailure?(error: .Client(error))
+		} else if let data = self.data {
+			onSuccess?(resultData: data)
 		}
 	}
 }

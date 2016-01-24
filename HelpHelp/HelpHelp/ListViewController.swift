@@ -13,6 +13,8 @@ class ListViewController: UIViewController {
 	
 	@IBOutlet weak var heartContainerView: UIView!
 	@IBOutlet weak var textView: UITextView!
+	@IBOutlet weak var listTabBarItem: UITabBarItem!
+	@IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 	
 	private lazy var locationManager:CLLocationManager = {
 		let locationManager = CLLocationManager()
@@ -24,6 +26,7 @@ class ListViewController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		listTabBarItem.title = LocalizedString("helphelp2.mainNavigation.list")
 		textView.contentInset = UIEdgeInsets(top: heartContainerView.bounds.size.height, left: 0, bottom: 0, right: 0)
 		CollectionSiteManager.reset()
 	}
@@ -51,9 +54,9 @@ class ListViewController: UIViewController {
 				attributedText.appendAttributedString(NSAttributedString(string: "\(collectionSite.name)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(17), NSForegroundColorAttributeName : UIColor.colorWithWebColor("#a0388c", alpha: 1.0)!]))
 				
 				let distance = String(format: "%2.2f", (collectionSite.distance/1000))
-				attributedText.appendAttributedString(NSAttributedString(string: "\n"+"Entfernung: "+distance+" km", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+				attributedText.appendAttributedString(NSAttributedString(string: "\n\(LocalizedString("helphelp2.siteAnnotation.distance")) \(distance) \(LocalizedString("helphelp2.siteAnnotation.distance.unit"))", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 				if collectionSite.helpersNeeded {
-					attributedText.appendAttributedString(NSAttributedString(string: "\nFreiwillige Helfer gesucht!", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15), NSForegroundColorAttributeName : UIColor.colorWithWebColor("#a0388c", alpha: 1.0)!]))
+					attributedText.appendAttributedString(NSAttributedString(string: "\n\(LocalizedString("helphelp2.siteDetail.list.helpersNeeded"))", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15), NSForegroundColorAttributeName : UIColor.colorWithWebColor("#a0388c", alpha: 1.0)!]))
 				}
 				let itemString = collectionSite.itemsAsString
 				if !itemString.isEmpty {
@@ -65,13 +68,13 @@ class ListViewController: UIViewController {
 				attributedText.appendAttributedString(NSAttributedString(string: "\n\(collectionSite.address.zip)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 				attributedText.appendAttributedString(NSAttributedString(string: " \(collectionSite.address.city)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 				if !collectionSite.contact.isEmpty {
-					attributedText.appendAttributedString(NSAttributedString(string: "\n\nKontakt: \(collectionSite.contact)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+					attributedText.appendAttributedString(NSAttributedString(string: "\n\n\(LocalizedString("helphelp2.siteDetail.list.contact")) \(collectionSite.contact)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 				}
 				if !collectionSite.webAddress.isEmpty {
-					attributedText.appendAttributedString(NSAttributedString(string: "\nWebseite: \(collectionSite.webAddress)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+					attributedText.appendAttributedString(NSAttributedString(string: "\n\(LocalizedString("helphelp2.siteDetail.list.webAddress")) \(collectionSite.webAddress)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 				}
 				if !collectionSite.openingHint.isEmpty {
-					attributedText.appendAttributedString(NSAttributedString(string: "\nWeitere Angaben: \(collectionSite.openingHint)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
+					attributedText.appendAttributedString(NSAttributedString(string: "\n\(LocalizedString("helphelp2.siteDetail.list.more")) \(collectionSite.openingHint)", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15)]))
 				}
 				attributedText.appendAttributedString(NSAttributedString(string: "\n\n----------\n\n", attributes: [NSFontAttributeName : UIFont.systemFontOfSize(15), NSParagraphStyleAttributeName : centerParagraphStyle]))
 				textView.attributedText = attributedText

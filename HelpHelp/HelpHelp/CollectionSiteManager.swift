@@ -72,11 +72,14 @@ class CollectionSiteManager {
 	}
 	
 	let collectionSiteContainer:CollectionSiteContainer
-	var orderedSites:[CollectionSite]?
+	var orderedSites:[CollectionSite]? {
+		get {
+			return collectionSiteContainer.collectionSites.sort({$0.distance < $1.distance})
+		}
+	}
 	
 	required init(container:CollectionSiteContainer) {
 		self.collectionSiteContainer = container
-		orderedSites = collectionSiteContainer.collectionSites.sort({$0.distance < $1.distance})
 	}
 	
 	func siteForId(siteId:Int) -> CollectionSite? {
