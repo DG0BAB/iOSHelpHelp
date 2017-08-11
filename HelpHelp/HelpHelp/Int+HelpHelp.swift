@@ -9,43 +9,43 @@
 import Foundation
 
 extension Int {
-	public var second: NSTimeInterval {
-		return NSTimeInterval(self)
+	public var second: TimeInterval {
+		return TimeInterval(self)
 	}
-	
-	public var seconds: NSTimeInterval {
-		return NSTimeInterval(self)
+
+	public var seconds: TimeInterval {
+		return TimeInterval(self)
 	}
-	
-	public var minute: NSTimeInterval {
-		return NSTimeInterval(self * 60)
+
+	public var minute: TimeInterval {
+		return TimeInterval(self * 60)
 	}
-	
-	public var minutes: NSTimeInterval {
+
+	public var minutes: TimeInterval {
 		return self.minute
 	}
-	
-	public var hour: NSTimeInterval {
-		return NSTimeInterval(self * 3600)
+
+	public var hour: TimeInterval {
+		return TimeInterval(self * 3600)
 	}
-	
-	public var hours: NSTimeInterval {
+
+	public var hours: TimeInterval {
 		return self.hour
 	}
-	
-	public var day: NSTimeInterval {
-		return NSTimeInterval(self * 86400)
+
+	public var day: TimeInterval {
+		return TimeInterval(self * 86400)
 	}
-	
-	public var days: NSTimeInterval {
+
+	public var days: TimeInterval {
 		return self.day
 	}
-	
-	public var week: NSTimeInterval {
-		return NSTimeInterval(self * 86400 * 7)
+
+	public var week: TimeInterval {
+		return TimeInterval(self * 86400 * 7)
 	}
-	
-	public var weeks: NSTimeInterval {
+
+	public var weeks: TimeInterval {
 		return self.week
 	}
 }

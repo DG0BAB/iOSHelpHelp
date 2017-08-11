@@ -9,26 +9,23 @@
 import Foundation
 
 
-class Communicator : NSObject {
-	typealias SuccessType = (resultData:NSData) -> Void
-	typealias FailureType = (error:CommunicatorError) -> Void
-	
-	let URL:NSURL!
-	
-	required init(URL:NSURL) {
-		self.URL = URL
+class Communicator: NSObject {
+	typealias SuccessType = (_ resultData: Data) -> Void
+	typealias FailureType = (_ error: CommunicatorError) -> Void
+
+	let url: URL!
+
+	required init(url: URL) {
+		self.url = url
 	}
-	
-	convenience init?(url:String) {
-		if let URL:NSURL = NSURL(string: url) {
-			self.init(URL: URL)
-		} else {
-			return nil
-		}
+
+	convenience init?(urlString: String) {
+		guard let url: URL = URL(string: urlString) else { return nil }
+		self.init(url: url)
 	}
 }
 
-public enum CommunicatorError : ErrorType {
-	case Client(NSError?)
-	case Server(NSError?)
+public enum CommunicatorError: Error {
+	case client(Error?)
+	case server(Error?)
 }

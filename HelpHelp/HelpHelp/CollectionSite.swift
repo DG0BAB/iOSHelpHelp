@@ -21,30 +21,30 @@ struct Weekday : OptionSetType {
 }
 */
 
-class CollectionSite : Equatable {
-	
-	let id:Int
-	let name:String
-	let address:Address
-	let distance:Double
-	let openingHint:String
-	let webAddress:String
-	let contactPerson:String
-	let contactPhoneNumber:String
-	let helpersNeeded:Bool
-	let items:[String]
-	
-	var contact:String {
+class CollectionSite: Equatable {
+
+	let id: Int
+	let name: String
+	let address: Address
+	let distance: Double
+	let openingHint: String
+	let webAddress: String
+	let contactPerson: String
+	let contactPhoneNumber: String
+	let helpersNeeded: Bool
+	let items: [String]
+
+	var contact: String {
 		let person = contactPerson.isEmpty ? "" : contactPerson
 		let plus = (!contactPerson.isEmpty && !contactPhoneNumber.isEmpty) ?  ", " : ""
 		let phone = contactPhoneNumber.isEmpty ? "" : contactPhoneNumber
 		return person+plus+phone
 	}
-	
+
 	var itemsAsString: String {
-		return (items as NSArray).componentsJoinedByString(", ")
+		return (items as NSArray).componentsJoined(by: ", ")
 	}
-	
+
 /*
 	struct OpeningHours {
 		let fromTime:NSTimeInterval
@@ -63,7 +63,8 @@ class CollectionSite : Equatable {
 		}
 	}
 */
-	required init(id:Int, name:String, address:Address, distance:Double, openingHint:String, webAddress:String, contactPerson:String, contactPhoneNumber:String, helpersNeeded:Bool, items:[String]) {
+	required init(id: Int, name: String, address: Address, distance: Double, openingHint: String, webAddress: String,
+	              contactPerson: String, contactPhoneNumber: String, helpersNeeded: Bool, items: [String]) {
 		self.id = id
 		self.name = name
 		self.address = address
@@ -75,31 +76,33 @@ class CollectionSite : Equatable {
 		self.helpersNeeded = helpersNeeded
 		self.items = items
 	}
-	
-	convenience init(jsonDict:JSONDictType) {
-		let id = jsonDict["id"] as! Int
-		let name = jsonDict["name"] as! String
-		let address = Address(jsonDict:jsonDict["addr"] as! JSONDictType)
-		let distance = jsonDict["distance"] as! Double
-		let openingHint = jsonDict["hours"] as! String
-		let webAddress = jsonDict["website"] as! String
-		let contactPerson = jsonDict["person"] as! String
-		let contactPhoneNumber = jsonDict["phone"] as! String
-		let helpersNeeded = jsonDict["helpers"] as! Bool
-		let items = jsonDict["items"] as! [String]
-		self.init(id:id, name:name, address:address, distance:distance, openingHint:openingHint, webAddress:webAddress, contactPerson:contactPerson, contactPhoneNumber:contactPhoneNumber, helpersNeeded:helpersNeeded, items:items)
+
+	convenience init?(jsonDict: JSONDictType) {
+		guard let id = jsonDict["id"] as? Int,
+			let name = jsonDict["name"] as? String,
+			let addressDict = jsonDict["addr"] as? JSONDictType,
+			let address = Address(jsonDict: addressDict),
+			let distance = jsonDict["distance"] as? Double,
+			let openingHint = jsonDict["hours"] as? String,
+			let webAddress = jsonDict["website"] as? String,
+			let contactPerson = jsonDict["person"] as? String,
+			let contactPhoneNumber = jsonDict["phone"] as? String,
+			let helpersNeeded = jsonDict["helpers"] as? Bool,
+			let items = jsonDict["items"] as? [String]  else {
+				return nil
+		}
+		self.init(id:id, name:name, address:address, distance:distance, openingHint:openingHint, webAddress:webAddress, contactPerson:contactPerson,
+		          contactPhoneNumber:contactPhoneNumber, helpersNeeded:helpersNeeded, items:items)
 	}
-	
+
 }
 
-func ==(lhs: CollectionSite, rhs: CollectionSite) -> Bool {
+func == (lhs: CollectionSite, rhs: CollectionSite) -> Bool {
 	return lhs === rhs
-	}
-
+}
 
 extension CollectionSite : Hashable {
 	var hashValue: Int {
 		return id
 	}
-
 }

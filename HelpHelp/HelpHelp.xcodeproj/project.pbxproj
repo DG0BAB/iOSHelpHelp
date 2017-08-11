@@ -17,7 +17,7 @@
 		792E05891BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E05881BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift */; };
 		792E058B1BA76DF0000CB093 /* CollectionSiteAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */; };
 		7949B12F1BA58A9B001F6A76 /* CollectionSiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */; };
-		7949B1321BA590A8001F6A76 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B1311BA590A8001F6A76 /* UserDefaults.swift */; };
+		7949B1321BA590A8001F6A76 /* HHUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7949B1311BA590A8001F6A76 /* HHUserDefaults.swift */; };
 		796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C31BA0BCC500A27539 /* AppDelegate.swift */; };
 		796E44C61BA0BCC500A27539 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C51BA0BCC500A27539 /* MapViewController.swift */; };
 		796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796E44C71BA0BCC500A27539 /* ListViewController.swift */; };
@@ -34,14 +34,14 @@
 		791E2B931BA4523600C1079C /* HTTPCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPCommunicator.swift; sourceTree = "<group>"; };
 		791E2B951BA454B200C1079C /* Communicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Communicator.swift; sourceTree = "<group>"; };
 		791E2B981BA45D1700C1079C /* HTTPStatusCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPStatusCodes.swift; sourceTree = "<group>"; };
-		791E2B9B1BA4876200C1079C /* CollectionSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSite.swift; sourceTree = "<group>"; usesTabs = 0; };
+		791E2B9B1BA4876200C1079C /* CollectionSite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSite.swift; sourceTree = "<group>"; usesTabs = 1; };
 		791E2B9D1BA4880A00C1079C /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
 		792150EB1BAAD3B600784FDC /* UIIColor+HelpHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIIColor+HelpHelp.swift"; sourceTree = "<group>"; };
 		792150F51BAB2D0000784FDC /* CollectionSiteAddressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionSiteAddressViewController.swift; path = HelpHelp/CollectionSiteAddressViewController.swift; sourceTree = "<group>"; };
 		792E05881BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteMapDetailViewController.swift; sourceTree = "<group>"; };
 		792E058A1BA76DF0000CB093 /* CollectionSiteAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteAnnotation.swift; sourceTree = "<group>"; };
 		7949B12E1BA58A9B001F6A76 /* CollectionSiteManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSiteManager.swift; sourceTree = "<group>"; };
-		7949B1311BA590A8001F6A76 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		7949B1311BA590A8001F6A76 /* HHUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HHUserDefaults.swift; sourceTree = "<group>"; };
 		796E44C01BA0BCC500A27539 /* HelpHelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelpHelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		796E44C31BA0BCC500A27539 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796E44C51BA0BCC500A27539 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		7949B1301BA59087001F6A76 /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
-				7949B1311BA590A8001F6A76 /* UserDefaults.swift */,
+				7949B1311BA590A8001F6A76 /* HHUserDefaults.swift */,
 			);
 			name = UserDefaults;
 			sourceTree = "<group>";
@@ -202,6 +202,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 796E44D41BA0BCC500A27539 /* Build configuration list for PBXNativeTarget "HelpHelp" */;
 			buildPhases = (
+				79AB604A1F3DE4C10047719F /* ShellScript */,
 				796E44BC1BA0BCC500A27539 /* Sources */,
 				796E44BD1BA0BCC500A27539 /* Frameworks */,
 				796E44BE1BA0BCC500A27539 /* Resources */,
@@ -266,6 +267,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		79AB604A1F3DE4C10047719F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		796E44BC1BA0BCC500A27539 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -276,7 +293,7 @@
 				796E44C81BA0BCC500A27539 /* ListViewController.swift in Sources */,
 				7949B12F1BA58A9B001F6A76 /* CollectionSiteManager.swift in Sources */,
 				792E05891BA75BB2000CB093 /* CollectionSiteMapDetailViewController.swift in Sources */,
-				7949B1321BA590A8001F6A76 /* UserDefaults.swift in Sources */,
+				7949B1321BA590A8001F6A76 /* HHUserDefaults.swift in Sources */,
 				792E058B1BA76DF0000CB093 /* CollectionSiteAnnotation.swift in Sources */,
 				796E44C41BA0BCC500A27539 /* AppDelegate.swift in Sources */,
 				791E2B941BA4523600C1079C /* HTTPCommunicator.swift in Sources */,
@@ -410,6 +427,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = de.micabo.helphelp2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "548074a8-d4ff-4c02-8c27-0b49182a3f0b";
+				SWIFT_VERSION = 4;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;

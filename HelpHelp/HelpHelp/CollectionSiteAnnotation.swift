@@ -10,23 +10,21 @@ import Foundation
 import MapKit
 
 class CollectionSiteAnnotation: MKPointAnnotation {
-	var siteId:Int = 0
-	
-	required init(siteId:Int) {
+	var siteId: Int = 0
+
+	required init(siteId: Int) {
 		super.init()
 		self.siteId = siteId
 	}
-	
-	override func isEqual(object: AnyObject?) -> Bool {
+
+	override func isEqual(_ object: Any?) -> Bool {
 		if let object = object as? CollectionSiteAnnotation {
 			return self.siteId == object.siteId
 		}
 		return false
 	}
-	
+
 	override var hashValue: Int {
 		return siteId
 	}
-
-	
 }

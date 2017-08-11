@@ -8,43 +8,45 @@
 
 import Foundation
 
-typealias JSONDictType = [String:AnyObject]
+typealias JSONDictType = [String : Any]
 typealias CollectionSitesType = Set<CollectionSite>
 
 class CollectionSiteContainer: NSObject {
 	static let CollectionSitesKVOKey = "CollectionSites"
-	
-	private lazy var mutableCollectionSites:CollectionSitesType = {
+
+	private lazy var mutableCollectionSites: CollectionSitesType = {
 		return CollectionSitesType()
 	}()
-	
+
 	var collectionSites: CollectionSitesType {
 		let result = mutableCollectionSites
 		return result
 	}
-	
-	init(jsonDict:JSONDictType) {
+
+	init(jsonDict: JSONDictType) {
 		super.init()
-		let sites = jsonDict["places"] as! [JSONDictType]
-		for oneEntry in sites {
-			let newSite = CollectionSite(jsonDict: oneEntry)
-			addSite(newSite)
+		if let sites = jsonDict["places"] as? [JSONDictType] {
+			for oneEntry in sites {
+				if let newSite = CollectionSite(jsonDict: oneEntry) {
+					addSite(newSite)
+				}
+			}
 		}
 	}
-	
-	func addSite(site:CollectionSite) {
-		willChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
+
+	func addSite(_ site: CollectionSite) {
+		willChangeValue(forKey: CollectionSiteContainer.CollectionSitesKVOKey)
 		mutableCollectionSites.insert(site)
-		didChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
+		didChangeValue(forKey: CollectionSiteContainer.CollectionSitesKVOKey)
 	}
-	
-	func removeSite(site:CollectionSite) {
-		willChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
+
+	func removeSite(_ site: CollectionSite) {
+		willChangeValue(forKey: CollectionSiteContainer.CollectionSitesKVOKey)
 		mutableCollectionSites.remove(site)
-		didChangeValueForKey(CollectionSiteContainer.CollectionSitesKVOKey)
+		didChangeValue(forKey: CollectionSiteContainer.CollectionSitesKVOKey)
 	}
-	
-	func indexOfSite(site:CollectionSite) -> SetIndex<CollectionSite>? {
-		return mutableCollectionSites.indexOf(site)
+
+	func indexOfSite(_ site: CollectionSite) -> SetIndex<CollectionSite>? {
+		return mutableCollectionSites.index(of: site)
 	}
 }

@@ -8,78 +8,74 @@
 
 import Foundation
 
-enum HTTPCommunicatorError: ErrorType {
-	case MissingPath
+enum HTTPCommunicatorError: Error {
+	case missingPath
 }
 
 class HTTPCommunicator: Communicator {
-	
-	private var sessionConfiguration: NSURLSessionConfiguration {
-		get {
-			let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-			configuration.timeoutIntervalForRequest = 2
-			return configuration
-		}
+
+	private var sessionConfiguration: URLSessionConfiguration {
+		let configuration = URLSessionConfiguration.default
+		configuration.timeoutIntervalForRequest = 2
+		return configuration
 	}
-	
-	private var session: NSURLSession {
-		get {
-			return NSURLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
-		}
+
+	private var session: URLSession {
+		return URLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
 	}
-	private var data: NSMutableData?
-	private var onSuccess: Communicator.SuccessType?
-	private var onFailure: Communicator.FailureType?
-	
-	func GET(path:String, success: Communicator.SuccessType, failure: Communicator.FailureType) throws -> Void {
-		
-		guard !path.isEmpty else { throw HTTPCommunicatorError.MissingPath }
-		
-		if let requestURL = NSURL(string: path, relativeToURL: URL) {
+	fileprivate var data: Data?
+	fileprivate var onSuccess: Communicator.SuccessType?
+	fileprivate var onFailure: Communicator.FailureType?
+
+	func GET(path: String, success: @escaping Communicator.SuccessType, failure: @escaping Communicator.FailureType) throws {
+
+		guard !path.isEmpty else { throw HTTPCommunicatorError.missingPath }
+
+		if let requestURL = URL(string: path, relativeTo: url) {
 			onSuccess = success
 			onFailure = failure
-			session.dataTaskWithURL(requestURL).resume()
+			session.dataTask(with: requestURL).resume()
 		}
 	}
 }
 
-extension HTTPCommunicator : NSURLSessionDataDelegate {
-	
-	func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveResponse response: NSURLResponse, completionHandler: (NSURLSessionResponseDisposition) -> Void) {
-		if let response = response as? NSHTTPURLResponse {
+extension HTTPCommunicator : URLSessionDataDelegate {
+
+	func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+
+		if let response = response as? HTTPURLResponse {
 			switch response.statusCode {
-				
-			case HTTPStatusCode.OK_200.rawValue:
-				data = NSMutableData()
-				completionHandler(.Allow)
-				
-			case HTTPStatusCode.ClientError.startValue...HTTPStatusCode.ClientError.endValue:
+
+			case HTTPStatusCode.ok_200.rawValue:
+				data = Data()
+				completionHandler(.allow)
+
+			case HTTPStatusCode.clientError.startValue...HTTPStatusCode.clientError.endValue:
 				print("Client-Error")
-				onFailure?(error: .Client(nil))
-				completionHandler(.Cancel)
-				
-			case HTTPStatusCode.ServerError.startValue...HTTPStatusCode.ServerError.endValue:
+				onFailure?(.client(nil))
+				completionHandler(.cancel)
+
+			case HTTPStatusCode.serverError.startValue...HTTPStatusCode.serverError.endValue:
 				print("Server-Error")
-				onFailure?(error: .Server(nil))
-				completionHandler(.Cancel)
-				
+				onFailure?(.server(nil))
+				completionHandler(.cancel)
+
 			default: break
-				
+
 			}
 		}
 	}
 
-	func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
+	func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
 		print("Data received: \(data)\n\n")
-		self.data?.appendData(data)
+		self.data?.append(data)
 	}
-	
-	func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+
+	func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
 		if let error = error {
-			onFailure?(error: .Client(error))
+			onFailure?(.client(error))
 		} else if let data = self.data {
-			onSuccess?(resultData: data)
+			onSuccess?(data)
 		}
 	}
 }
-
