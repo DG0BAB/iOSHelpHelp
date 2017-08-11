@@ -1,0 +1,27 @@
+line_length:
+  warning: 180
+  ignores_comments: true
+
+colon:
+  apply_to_dictionaries: false
+
+identifier_name:
+  min_length:	
+    error: 4
+  max_length: 	
+    warning: 60
+  excluded: 	# excluded via string array
+    - id
+    - iD
+    - URL
+    - url
+    - lhs
+    - rhs
+    - zip
+    - day
+    - GlobalAPIKey
+  allowed_symbols:
+    - _
+
+vertical_whitespace:
+    max_empty_lines: 5
